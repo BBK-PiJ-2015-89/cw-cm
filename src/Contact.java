@@ -3,6 +3,6 @@
  */
 public class Contact {
 public int getID() {
-        return 0;
+        return 10;
     }
 }
