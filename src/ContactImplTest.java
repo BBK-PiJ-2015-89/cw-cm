@@ -33,6 +33,8 @@ public class ContactImplTest {
 
     @org.junit.Test
     public void testGetNotes() throws Exception {
+        assertEquals("Member of staff", one.getNotes());
+        assertEquals("External Staff Member", two.getNotes());
 
     }
 
