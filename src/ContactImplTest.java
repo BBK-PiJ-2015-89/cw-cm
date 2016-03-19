@@ -36,6 +36,7 @@ public class ContactImplTest {
 
     @org.junit.Test
     public void testAddNotes() throws Exception {
-
+        one.addNotes("Selected");
+        assertEquals("Member of staff Selected", one.getNotes());
     }
 }
