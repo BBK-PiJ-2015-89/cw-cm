@@ -1,8 +1,5 @@
 import static org.junit.Assert.assertEquals;
 
-/**
- * Created by graemewilkinson on 14/03/16.
- */
 public class ContactImplTest {
 
     Contact one;
@@ -35,7 +32,6 @@ public class ContactImplTest {
     public void testGetNotes() throws Exception {
         assertEquals("Member of staff", one.getNotes());
         assertEquals("External Staff Member", two.getNotes());
-
     }
 
     @org.junit.Test
