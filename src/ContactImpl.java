@@ -4,12 +4,14 @@
 public class ContactImpl implements Contact {
     int id;
     String name;
-    String notes;
+    StringBuilder notes;
 
     public ContactImpl(int id, String name, String notes){
         this.id = id;
         this.name = name;
-        this.notes = notes;
+        this.notes = new StringBuilder();
+        this.notes.append(notes);
+
     }
 
     @Override
@@ -24,11 +26,11 @@ public class ContactImpl implements Contact {
 
     @Override
     public String getNotes() {
-        return notes;
+        return notes.toString();
     }
 
     @Override
     public void addNotes(String note) {
-
+        notes.append(" " + note);
     }
 }
