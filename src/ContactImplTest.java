@@ -5,7 +5,8 @@ public class ContactImplTest {
 
     @org.junit.Before
     public void setUp() throws Exception {
-
+        Contact one = new ContactImpl(1, "Graeme", "Member of staff");
+        Contact two = new ContactImpl(2, "Phil", "External Staff Member");
     }
 
     @org.junit.After
