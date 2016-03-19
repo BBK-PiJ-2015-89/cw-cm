@@ -19,7 +19,7 @@ public class ContactImpl implements Contact {
 
     @Override
     public String getName() {
-        return null;
+        return name;
     }
 
     @Override
