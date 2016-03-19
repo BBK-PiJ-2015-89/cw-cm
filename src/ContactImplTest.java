@@ -1,12 +1,17 @@
+import static org.junit.Assert.assertEquals;
+
 /**
  * Created by graemewilkinson on 14/03/16.
  */
 public class ContactImplTest {
 
+    Contact one;
+    Contact two;
+
     @org.junit.Before
     public void setUp() throws Exception {
-        Contact one = new ContactImpl(1, "Graeme", "Member of staff");
-        Contact two = new ContactImpl(2, "Phil", "External Staff Member");
+        one = new ContactImpl(1, "Graeme", "Member of staff");
+        two = new ContactImpl(2, "Phil", "External Staff Member");
     }
 
     @org.junit.After
@@ -16,7 +21,8 @@ public class ContactImplTest {
 
     @org.junit.Test
     public void testGetId() throws Exception {
-
+        assertEquals(1, one.getId());
+        assertEquals(2, two.getId());
     }
 
     @org.junit.Test
