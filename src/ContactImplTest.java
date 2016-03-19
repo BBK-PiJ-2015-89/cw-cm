@@ -27,7 +27,8 @@ public class ContactImplTest {
 
     @org.junit.Test
     public void testGetName() throws Exception {
-
+        assertEquals("Graeme", one.getName());
+        assertEquals("Phil", two.getName());
     }
 
     @org.junit.Test
