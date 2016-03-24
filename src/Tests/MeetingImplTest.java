@@ -2,7 +2,9 @@ package Tests;
 
 import Code.Contact;
 import Code.ContactImpl;
+import Code.FutureMeetingImpl;
 import Code.Meeting;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Calendar;
@@ -20,14 +22,16 @@ public class MeetingImplTest {
     @org.junit.Before
     public void TestMeeting() {
         meeting = null;
-        contactList = new HashSet<Contact>();
-        contactList.add(new ContactImpl(1, "Graeme Wilkinson"));
+        contactList = new HashSet<>();
+        contactList.add(new ContactImpl(1, "Graeme Wilkinson", "New friend"));
+        contactList.add(new ContactImpl(2, "Mark Wilkinson", "Old friend"));
         date = new GregorianCalendar();
     }
 
     @Test
     public void testGetId(){
-
+        meeting = new FutureMeetingImpl(27, date, contactList);
+        Assert.assertEquals(27, meeting.getId());
     }
 
     @Test
