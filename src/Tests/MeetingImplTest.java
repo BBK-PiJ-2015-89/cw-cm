@@ -37,14 +37,14 @@ public class MeetingImplTest {
     }
 
     @Test
-    public void testGetDate() throws Exception {
+    public void testGetDate(){
         meeting = new FutureMeetingImpl(168, date, contactList);
         assertTrue(date == meeting.getDate());
-
     }
 
     @Test
-    public void testGetContacts() throws Exception {
-
+    public void testGetContacts(){
+        meeting = new FutureMeetingImpl(274, date, contactList);
+        assertTrue(contactList == meeting.getContacts());
     }
 }
