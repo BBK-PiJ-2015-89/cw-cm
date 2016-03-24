@@ -1,7 +1,7 @@
-package tests;
+package Tests;
 
-import code.Contact;
-import code.ContactImpl;
+import Code.Contact;
+import Code.ContactImpl;
 import org.junit.Assert;
 
 public class ContactImplTest {

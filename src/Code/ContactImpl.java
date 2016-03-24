@@ -1,4 +1,4 @@
-package code;
+package Code;
 
 /**
  * Created by graemewilkinson on 06/03/16.
