@@ -12,6 +12,8 @@ import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.Set;
 
+import static org.junit.Assert.assertTrue;
+
 
 public class MeetingImplTest {
 
@@ -37,7 +39,7 @@ public class MeetingImplTest {
     @Test
     public void testGetDate() throws Exception {
         meeting = new FutureMeetingImpl(168, date, contactList);
-        Assert.assertEquals(date, meeting.getDate());
+        assertTrue(date == meeting.getDate());
 
     }
 
