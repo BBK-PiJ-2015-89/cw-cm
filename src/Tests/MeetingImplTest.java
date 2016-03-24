@@ -36,6 +36,8 @@ public class MeetingImplTest {
 
     @Test
     public void testGetDate() throws Exception {
+        meeting = new FutureMeetingImpl(168, date, contactList);
+        Assert.assertEquals(date, meeting.getDate());
 
     }
 
