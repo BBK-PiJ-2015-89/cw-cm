@@ -9,6 +9,12 @@ public abstract class MeetingImpl implements Meeting {
     Calendar date;
     Set<Contact> contacts;
 
+    /**
+     *
+     * @param id
+     * @param date
+     * @param contacts
+     */
     public MeetingImpl(int id, Calendar date, Set<Contact> contacts){
         this.contacts = contacts;
         this.date = date;

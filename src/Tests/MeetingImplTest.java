@@ -22,12 +22,12 @@ public class MeetingImplTest {
     Calendar date;
 
     @org.junit.Before
-    public void TestMeeting() {
+    public void testMeeting() {
         meeting = null;
-        contactList = new HashSet<>();
+        contactList = new HashSet<>(); //unordered set to attach to meeting
         contactList.add(new ContactImpl(1, "Graeme Wilkinson", "New friend"));
         contactList.add(new ContactImpl(2, "Mark Wilkinson", "Old friend"));
-        date = new GregorianCalendar();
+        date = new GregorianCalendar(); //sets date to today
     }
 
     @Test
