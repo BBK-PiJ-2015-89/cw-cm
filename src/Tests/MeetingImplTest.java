@@ -71,7 +71,7 @@ public class MeetingImplTest {
     @Test
     public void testPastMeetingGetNotes(){
         pastMeeting = new PastMeetingImpl(100, pastDate, contactList, notes);
-        assertTrue(notes == pastMeeting.get());
+        assertTrue(notes == pastMeeting.getNotes());
     }
 
 
