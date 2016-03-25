@@ -92,7 +92,7 @@ public class ContactManagerImpl implements ContactManager {
         }
         Set<Contact> filteredSet = contactList.stream().filter((Contact b) -> {
             boolean contactValid = false;
-            for (int i = 0; i< ids.length; i++) {
+            for (int i = 1; i< ids.length; i++) {
                 if (ids[i] == b.getId()) {
                     contactValid = true;
                 } else {
