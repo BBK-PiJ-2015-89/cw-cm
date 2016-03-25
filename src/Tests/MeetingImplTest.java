@@ -39,9 +39,10 @@ public class MeetingImplTest {
         meeting = new FutureMeetingImpl(-2, date, contactList);
     }
 
-    @Test (expected = NullPointerException.class)
-    public void testGetIdNull(){
-        meeting = new FutureMeetingImpl(null, date, contactList);
+    @Test (expected = IllegalArgumentException.class)
+    public void testGetContactsEmpty(){
+        Set<Contact> emptyList = new HashSet<>();
+        meeting = new FutureMeetingImpl(102, date, emptyList);
     }
 
     @Test
