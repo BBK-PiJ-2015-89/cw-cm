@@ -23,6 +23,10 @@ public class ContactManagerImplTest {
         contactManagerTest = new ContactManagerImpl();
         futureDate = new GregorianCalendar();
         pastDate = new GregorianCalendar(2014, 04, 20);
+        contactManagerTest.addNewContact("Graeme", "Graeme is a  test");
+        contactManagerTest.addNewContact("Phileme", "Graeme is a  test");
+        contactManagerTest.addNewContact("eme", "Graeme is a  test");
+        contactManagerTest.addNewContact("Mark", "Graeme is a  test");
     }
 
     @After
@@ -102,13 +106,21 @@ public class ContactManagerImplTest {
 
     @Test
     public void testGetContactsByString() throws Exception {
-        contactManagerTest.addNewContact("Graeme", "Graeme is a  test");
-        contactManagerTest.addNewContact("Phileme", "Graeme is a  test");
-        contactManagerTest.addNewContact("eme", "Graeme is a  test");
-        contactManagerTest.addNewContact("Mark", "Graeme is a  test");
         Set<Contact> filteredSet = contactManagerTest.getContacts("eme");
         Assert.assertEquals(3, filteredSet.size());
+    }
 
+    @Test
+    public void testGetContactsByEmptyString() throws Exception {
+        Set<Contact> filteredSet = contactManagerTest.getContacts("");
+        Assert.assertEquals(4, filteredSet.size());
+    }
+
+    @Test (expected = NullPointerException.class)
+    public void testGetContactsByStringNulled() throws Exception {
+        String testNull = null;
+        Set<Contact> filteredSet = contactManagerTest.getContacts(testNull);
+        Assert.assertEquals(3, filteredSet.size());
     }
 
     @Test
