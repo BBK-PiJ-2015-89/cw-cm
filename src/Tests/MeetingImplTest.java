@@ -1,9 +1,6 @@
 package Tests;
 
-import Code.Contact;
-import Code.ContactImpl;
-import Code.FutureMeetingImpl;
-import Code.Meeting;
+import Code.*;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -20,6 +17,8 @@ public class MeetingImplTest {
     private Meeting meeting;
     Set<Contact> contactList;
     Calendar date;
+    Calendar pastDate;
+    String notes;
 
     @org.junit.Before
     public void testMeeting() {
@@ -28,6 +27,8 @@ public class MeetingImplTest {
         contactList.add(new ContactImpl(1, "Graeme Wilkinson", "New friend"));
         contactList.add(new ContactImpl(2, "Mark Wilkinson", "Old friend"));
         date = new GregorianCalendar(); //sets date to today
+        pastDate = new GregorianCalendar(2014, 7, 14);
+
     }
 
     @Test
@@ -46,5 +47,11 @@ public class MeetingImplTest {
     public void testGetContacts(){
         meeting = new FutureMeetingImpl(274, date, contactList);
         assertTrue(contactList == meeting.getContacts());
+    }
+
+    @Test
+    public void testPastMeetingGetId(){
+        meeting = new PastMeetingImpl(100, pastDate, contactList, notes);
+        Assert.assertEquals(100, meeting.getId());
     }
 }
