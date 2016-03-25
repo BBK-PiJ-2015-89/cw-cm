@@ -9,7 +9,7 @@ import java.util.Set;
  */
 public class ContactManagerImpl implements ContactManager {
     private Set<Contact> contactList;
-    private
+    private int contactID = 1;
 
     @Override
     public int addFutureMeeting(Set<Contact> contacts, Calendar date) {
@@ -58,7 +58,14 @@ public class ContactManagerImpl implements ContactManager {
 
     @Override
     public int addNewContact(String name, String notes) {
-        return 0;
+        if(notes.isEmpty()) {
+            throw new IllegalArgumentException();
+        }else{
+            int TempID = contactID;
+            contactID++;
+            contactList.add(new ContactImpl(TempID, name, notes));
+            return TempID;
+        }
     }
 
     @Override
