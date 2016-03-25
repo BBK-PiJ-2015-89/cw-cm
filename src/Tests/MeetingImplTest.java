@@ -15,6 +15,7 @@ import static org.junit.Assert.assertTrue;
 public class MeetingImplTest {
 
     private Meeting meeting;
+    private PastMeeting pastMeeting;
     Set<Contact> contactList;
     Calendar date;
     Calendar pastDate;
@@ -51,14 +52,26 @@ public class MeetingImplTest {
 
     @Test
     public void testPastMeetingGetId(){
-        meeting = new PastMeetingImpl(100, pastDate, contactList, notes);
-        Assert.assertEquals(100, meeting.getId());
+        PastMeeting = new PastMeetingImpl(100, pastDate, contactList, notes);
+        Assert.assertEquals(100, PastMeeting.getId());
     }
 
     @Test
     public void testPastMeetingGetDate(){
-        meeting = new PastMeetingImpl(100, pastDate, contactList, notes);
-        assertTrue(pastDate == meeting.getDate());
+        pastMeeting = new PastMeetingImpl(100, pastDate, contactList, notes);
+        assertTrue(pastDate == pastMeeting.getDate());
+    }
+
+    @Test
+    public void testPastMeetingGetContacts(){
+        pastMeeting = new PastMeetingImpl(100, pastDate, contactList, notes);
+        assertTrue(contactList == pastMeeting.getContacts());
+    }
+
+    @Test
+    public void testPastMeetingGetNotes(){
+        pastMeeting = new PastMeetingImpl(100, pastDate, contactList, notes);
+        assertTrue(notes == pastMeeting.get());
     }
 
 
