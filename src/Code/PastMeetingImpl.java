@@ -21,11 +21,16 @@ public class PastMeetingImpl extends MeetingImpl implements PastMeeting {
      */
     public PastMeetingImpl(int id, Calendar date, Set<Contact> contacts, String notes) {
         super(id, date, contacts);
+        if(notes == null || notes.equals("")){
+            throw new IllegalArgumentException();
+        }else{
+            this.notes = notes;
+        }
 
     }
 
     @Override
     public String getNotes() {
-        return null;
+        return this.notes;
     }
 }
