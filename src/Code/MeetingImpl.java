@@ -15,13 +15,14 @@ public abstract class MeetingImpl implements Meeting {
      * @param date
      * @param contacts
      */
-    public MeetingImpl(int id, Calendar date, Set<Contact> contacts){
+
+    public MeetingImpl(int id, Calendar date, Set<Contact> contacts) {
         this.contacts = contacts;
         this.date = date;
-        if(id <= 0) {
+        if (id <= 0) {
             throw new IllegalArgumentException();
-        }else
-        this.id = id;
+        } else {
+            this.id = id;
         }
     }
 

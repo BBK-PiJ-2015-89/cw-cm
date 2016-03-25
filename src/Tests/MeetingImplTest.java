@@ -39,6 +39,11 @@ public class MeetingImplTest {
         meeting = new FutureMeetingImpl(-2, date, contactList);
     }
 
+    @Test (expected = NullPointerException.class)
+    public void testGetIdNull(){
+        meeting = new FutureMeetingImpl(null, date, contactList);
+    }
+
     @Test
     public void testGetId(){
         meeting = new FutureMeetingImpl(27, date, contactList);
