@@ -9,9 +9,6 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Set;
 
-/**
- * Created by graemewilkinson on 25/03/16.
- */
 public class ContactManagerImplTest {
 
     private ContactManager contactManagerTest;
@@ -124,7 +121,26 @@ public class ContactManagerImplTest {
     }
 
     @Test
-    public void testGetContacts1() throws Exception {
-
+    public void testGetContactsByID() throws Exception {
+        Set<Contact> filteredSet = contactManagerTest.getContacts(1,2,3);
+        Assert.assertEquals(3, filteredSet.size());
     }
+
+    @Test
+    public void testGetContactsByOneID() throws Exception {
+        Set<Contact> filteredSet = contactManagerTest.getContacts(1);
+        Assert.assertEquals(1, filteredSet.size());
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void testGetContactsNoID() throws Exception {
+        Set<Contact> filteredSet = contactManagerTest.getContacts();
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void testGetContactsInvalidID() throws Exception {
+        Set<Contact> filteredSet = contactManagerTest.getContacts(670);
+    }
+
+
 }
