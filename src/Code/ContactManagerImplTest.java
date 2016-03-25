@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashSet;
 import java.util.Set;
 
 public class ContactManagerImplTest {
@@ -33,7 +34,9 @@ public class ContactManagerImplTest {
 
     @Test
     public void testAddFutureMeeting() throws Exception {
-
+        Set<Contact> tempContactList = new HashSet<>();
+        tempContactList.add(new ContactImpl(1, "Graeme", "Test Notes"));
+        Assert.assertTrue(contactManagerTest.addFutureMeeting(tempContactList, futureDate) > 0);
     }
 
     @Test
@@ -128,10 +131,6 @@ public class ContactManagerImplTest {
 
     @Test
     public void testGetContactsByOneID() throws Exception {
-        contactManagerTest.addNewContact("Graeme", "Graeme is a  test");
-        contactManagerTest.addNewContact("Phileme", "Graeme is a  test");
-        contactManagerTest.addNewContact("eme", "Graeme is a  test");
-        contactManagerTest.addNewContact("Mark", "Graeme is a  test");
         Set<Contact> filteredSet = contactManagerTest.getContacts(1);
         Assert.assertEquals(1, filteredSet.size());
     }
