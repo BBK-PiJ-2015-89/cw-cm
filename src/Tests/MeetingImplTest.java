@@ -52,6 +52,10 @@ public class MeetingImplTest {
         meeting = new FutureMeetingImpl(102, date, emptyList);
     }
 
+    @Test (expected = NullPointerException.class)
+    public void testGetDateContainsNull(){
+        meeting = new FutureMeetingImpl(102, null, contactList);
+    }
 
     @Test
     public void testGetId(){
