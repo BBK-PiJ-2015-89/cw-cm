@@ -11,14 +11,18 @@ import java.util.stream.Collectors;
  */
 public class ContactManagerImpl implements ContactManager {
     private Set<Contact> contactList;
+    private Set<Meeting> meetingList;
     private int contactID = 1;
+    private int meetingID = 1;
 
     public ContactManagerImpl(){
         contactList = new HashSet<>();
     }
     @Override
     public int addFutureMeeting(Set<Contact> contacts, Calendar date) {
-        return 0;
+        meetingList.add(new FutureMeetingImpl(meetingID, date, contacts));
+        meetingID++;
+        return meetingID-1;
     }
 
     @Override

@@ -35,7 +35,7 @@ public class ContactManagerImplTest {
     @Test
     public void testAddFutureMeeting() throws Exception {
         Set<Contact> tempContactList = new HashSet<>();
-        tempContactList.add(new ContactImpl(1, "Graeme", "Test Notes"));
+        tempContactList.add(new ContactImpl(9, "Graeme", "Test Notes"));
         Assert.assertTrue(contactManagerTest.addFutureMeeting(tempContactList, futureDate) > 0);
     }
 
