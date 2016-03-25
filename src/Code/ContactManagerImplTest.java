@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Set;
 
 /**
  * Created by graemewilkinson on 25/03/16.
@@ -100,8 +101,13 @@ public class ContactManagerImplTest {
     }
 
     @Test
-    public void testGetContacts() throws Exception {
-
+    public void testGetContactsByString() throws Exception {
+        contactManagerTest.addNewContact("Graeme", "Graeme is a  test");
+        contactManagerTest.addNewContact("Phileme", "Graeme is a  test");
+        contactManagerTest.addNewContact("eme", "Graeme is a  test");
+        contactManagerTest.addNewContact("Mark", "Graeme is a  test");
+        Set<Contact> filteredSet = contactManagerTest.getContacts("eme");
+        Assert.assertEquals(3, filteredSet.size());
 
     }
 
