@@ -19,8 +19,8 @@ public class ContactManagerImplTest {
     @Before
     public void setUp() throws Exception {
         contactManagerTest = new ContactManagerImpl();
-        futureDate = new GregorianCalendar();
-        pastDate = new GregorianCalendar(2014, 04, 20);
+        futureDate = new GregorianCalendar(2016,5,2);
+        pastDate = new GregorianCalendar(2014, 4, 20);
         contactManagerTest.addNewContact("Graeme", "Graeme is a  test");
         contactManagerTest.addNewContact("Phileme", "Graeme is a  test");
         contactManagerTest.addNewContact("eme", "Graeme is a  test");
@@ -35,8 +35,9 @@ public class ContactManagerImplTest {
     @Test
     public void testAddFutureMeeting() throws Exception {
         Set<Contact> tempContactList = new HashSet<>();
-        tempContactList.add(new ContactImpl(9, "Graeme", "Test Notes"));
-        Assert.assertTrue(contactManagerTest.addFutureMeeting(tempContactList, futureDate) > 0);
+        tempContactList.add(new ContactImpl(1, "Graeme", "Test Notes"));
+        int newMeetingID = contactManagerTest.addFutureMeeting(tempContactList, futureDate);
+        Assert.assertTrue(newMeetingID>0);
     }
 
     @Test

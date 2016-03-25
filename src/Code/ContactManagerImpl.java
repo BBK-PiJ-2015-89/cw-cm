@@ -17,6 +17,7 @@ public class ContactManagerImpl implements ContactManager {
 
     public ContactManagerImpl(){
         contactList = new HashSet<>();
+        meetingList = new HashSet<>();
     }
     @Override
     public int addFutureMeeting(Set<Contact> contacts, Calendar date) {
@@ -82,9 +83,7 @@ public class ContactManagerImpl implements ContactManager {
         if(name == null){
             throw new NullPointerException();
         }
-        return contactList.stream().filter((Contact a) -> {
-            return a.getName().matches(".*" + name + ".*");
-        }).collect(Collectors.toSet());
+        return contactList.stream().filter((Contact a) -> a.getName().matches(".*" + name + ".*")).collect(Collectors.toSet());
     }
 
     @Override

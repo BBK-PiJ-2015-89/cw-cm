@@ -25,7 +25,7 @@ public abstract class MeetingImpl implements Meeting {
             this.contacts = contacts;
         }
         if(date == null){
-            throw new NullPointerException();
+            throw new NullPointerException("No date");
         }else {
             this.date = date;
         }
