@@ -92,15 +92,20 @@ public class ContactManagerImpl implements ContactManager {
         }
         Set<Contact> filteredSet = contactList.stream().filter((Contact b) -> {
             boolean contactValid = false;
-            for (int i = 1; i< ids.length; i++) {
+            for (int i = 0; i < ids.length; i++) {
                 if (ids[i] == b.getId()) {
                     contactValid = true;
-                } else {
-                    throw new IllegalArgumentException("One or more ID's do not exist in the database");
                 }
+
+                //else {
+                //   throw new IllegalArgumentException("One or more ID's do not exist in the database");
+                //}
             }
             return contactValid;
         }).collect(Collectors.toSet());
+        if(filteredSet.size()<ids.length){
+            throw new IllegalArgumentException("One or more ID's do not exist in the database");
+        }
         return filteredSet;
     }
 

@@ -128,6 +128,10 @@ public class ContactManagerImplTest {
 
     @Test
     public void testGetContactsByOneID() throws Exception {
+        contactManagerTest.addNewContact("Graeme", "Graeme is a  test");
+        contactManagerTest.addNewContact("Phileme", "Graeme is a  test");
+        contactManagerTest.addNewContact("eme", "Graeme is a  test");
+        contactManagerTest.addNewContact("Mark", "Graeme is a  test");
         Set<Contact> filteredSet = contactManagerTest.getContacts(1);
         Assert.assertEquals(1, filteredSet.size());
     }
