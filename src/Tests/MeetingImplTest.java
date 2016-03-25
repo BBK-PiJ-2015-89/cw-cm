@@ -30,7 +30,13 @@ public class MeetingImplTest {
         contactList.add(new ContactImpl(2, "Mark Wilkinson", "Old friend"));
         date = new GregorianCalendar(); //sets date to today
         pastDate = new GregorianCalendar(2014, 7, 14);
+        notes = "This is a test note";
 
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void testGetIdNeg(){
+        meeting = new FutureMeetingImpl(-2, date, contactList);
     }
 
     @Test
