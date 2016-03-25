@@ -99,5 +99,19 @@ public class MeetingImplTest {
         assertTrue(notes.equals(pastMeeting.getNotes()));
     }
 
+    @Test
+    public void testPastMeetingAddEmptyNotes(){
+        String emptyNotes = "";
+        pastMeeting = new PastMeetingImpl(100, pastDate, contactList, emptyNotes);
+        assertTrue(emptyNotes.equals(pastMeeting.getNotes()));
+    }
+
+    @Test (expected = NullPointerException.class)
+    public void testPastMeetingAddNullNotes(){
+        String emptyNotes = null;
+        pastMeeting = new PastMeetingImpl(100, pastDate, contactList, emptyNotes);
+    }
+
+
 
 }
