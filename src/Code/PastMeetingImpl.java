@@ -8,8 +8,6 @@ import java.util.Set;
  */
 public class PastMeetingImpl extends MeetingImpl implements PastMeeting {
 
-
-
     private String notes;
 
     /**
@@ -21,7 +19,7 @@ public class PastMeetingImpl extends MeetingImpl implements PastMeeting {
      */
     public PastMeetingImpl(int id, Calendar date, Set<Contact> contacts, String notes) {
         super(id, date, contacts);
-        if(notes == null || notes.equals("")){
+        if(notes == null){
             throw new IllegalArgumentException();
         }else{
             this.notes = notes;

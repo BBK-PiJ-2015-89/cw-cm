@@ -10,6 +10,8 @@ public abstract class MeetingImpl implements Meeting {
     Set<Contact> contacts;
 
     /**
+     *Creates new meeting with a unique ID, a date and a set of contacts assigned to the meeting.
+     * You cannot pass an empty set of contacts, a null date, or 0 or negative int.
      *
      * @param id
      * @param date
@@ -22,7 +24,11 @@ public abstract class MeetingImpl implements Meeting {
         }else{
             this.contacts = contacts;
         }
-        this.date = date;
+        if(date == null){
+            throw new NullPointerException();
+        }else {
+            this.date = date;
+        }
         if (id <= 0) {
             throw new IllegalArgumentException();
         } else {
