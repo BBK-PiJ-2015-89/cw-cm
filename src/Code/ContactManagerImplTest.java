@@ -79,8 +79,29 @@ public class ContactManagerImplTest {
         Assert.assertTrue(contactManagerTest.addNewContact("Graeme", "Test User") > 0);
     }
 
+    @Test (expected = IllegalArgumentException.class)
+    public void testAddNewContactWithEmptyName() throws Exception {
+        contactManagerTest.addNewContact("", "Test User");
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void testAddNewContactWithEmptyNotes() throws Exception {
+        contactManagerTest.addNewContact("Graeme", "");
+    }
+
+    @Test (expected = NullPointerException.class)
+    public void testAddNewContactWithnullNotes() throws Exception {
+        contactManagerTest.addNewContact("Graeme", null);
+    }
+
+    @Test (expected = NullPointerException.class)
+    public void testAddNewContactWithNullName() throws Exception {
+        contactManagerTest.addNewContact(null, "Graeme is a  test");
+    }
+
     @Test
     public void testGetContacts() throws Exception {
+
 
     }
 

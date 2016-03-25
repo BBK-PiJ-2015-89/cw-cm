@@ -1,6 +1,7 @@
 package Code;
 
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -11,6 +12,9 @@ public class ContactManagerImpl implements ContactManager {
     private Set<Contact> contactList;
     private int contactID = 1;
 
+    public ContactManagerImpl(){
+        contactList = new HashSet<>();
+    }
     @Override
     public int addFutureMeeting(Set<Contact> contacts, Calendar date) {
         return 0;
