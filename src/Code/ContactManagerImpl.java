@@ -85,7 +85,23 @@ public class ContactManagerImpl implements ContactManager {
 
     @Override
     public Set<Contact> getContacts(int... ids) {
-        return null;
+        if(ids == null){
+            throw new NullPointerException();
+        } else if (ids.length == 0){
+            throw new IllegalArgumentException("No ID's provided");
+        }
+        Set<Contact> filteredSet = contactList.stream().filter((Contact b) -> {
+            boolean contactValid = false;
+            for (int i : ids) {
+                if (ids[i] == b.getId()) {
+                    contactValid = true;
+                } else {
+                    throw new IllegalArgumentException("One or more ID's do not exsist in the database");
+                }
+            }
+            return contactValid;
+        }).collect(Collectors.toSet());
+        return filteredSet;
     }
 
     @Override
