@@ -24,6 +24,7 @@ public class MeetingImplTest {
     @org.junit.Before
     public void testMeeting() {
         meeting = null;
+        pastMeeting = null;
         contactList = new HashSet<>(); //unordered set to attach to meeting
         contactList.add(new ContactImpl(1, "Graeme Wilkinson", "New friend"));
         contactList.add(new ContactImpl(2, "Mark Wilkinson", "Old friend"));
@@ -52,8 +53,8 @@ public class MeetingImplTest {
 
     @Test
     public void testPastMeetingGetId(){
-        PastMeeting = new PastMeetingImpl(100, pastDate, contactList, notes);
-        Assert.assertEquals(100, PastMeeting.getId());
+        pastMeeting = new PastMeetingImpl(100, pastDate, contactList, notes);
+        Assert.assertEquals(100, pastMeeting.getId());
     }
 
     @Test
@@ -71,7 +72,7 @@ public class MeetingImplTest {
     @Test
     public void testPastMeetingGetNotes(){
         pastMeeting = new PastMeetingImpl(100, pastDate, contactList, notes);
-        assertTrue(notes == pastMeeting.getNotes());
+        assertTrue(notes.equals(pastMeeting.getNotes()));
     }
 
 
