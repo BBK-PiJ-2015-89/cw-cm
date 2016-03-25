@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Created by graemewilkinson on 25/03/16.
@@ -74,7 +75,12 @@ public class ContactManagerImpl implements ContactManager {
 
     @Override
     public Set<Contact> getContacts(String name) {
-        return null;
+        if(name == null){
+            throw new NullPointerException();
+        }
+        return contactList.stream().filter((Contact a) -> {
+            return a.getName().matches(".*" + name + ".*");
+        }).collect(Collectors.toSet());
     }
 
     @Override
