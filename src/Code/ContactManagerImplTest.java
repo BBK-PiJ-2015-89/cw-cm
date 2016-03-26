@@ -40,6 +40,13 @@ public class ContactManagerImplTest {
         Assert.assertTrue(newMeetingID>0);
     }
 
+    @Test (expected = IllegalArgumentException.class)
+    public void testAddFutureMeetingWPast() throws Exception {
+        Set<Contact> tempContactList = new HashSet<>();
+        tempContactList.add(new ContactImpl(1, "Graeme", "Test Notes"));
+        int newMeetingID = contactManagerTest.addFutureMeeting(tempContactList, pastDate);
+    }
+
     @Test
     public void testGetPastMeeting() throws Exception {
 
