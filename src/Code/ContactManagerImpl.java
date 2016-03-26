@@ -1,6 +1,9 @@
 package Code;
 
-import java.util.*;
+import java.util.Calendar;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -48,7 +51,16 @@ public class ContactManagerImpl implements ContactManager {
 
     @Override
     public List<Meeting> getMeetingListOn(Calendar date) {
-        return null;
+        List<Meeting> filtered = meetingList.stream().filter(c -> {
+            boolean onThisDay = false;
+            for (int i = 0; i < meetingList.size(); i++) {
+                if (c.getDate() == date) {
+                    onThisDay = true;
+                }
+            }
+            return onThisDay;
+        }).collect((Collectors.toList()));
+     return filtered;
     }
 
     @Override
