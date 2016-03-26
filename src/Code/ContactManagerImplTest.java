@@ -72,8 +72,16 @@ public class ContactManagerImplTest {
 
     @Test
     public void testGetMeetingListOn() throws Exception {
+        Calendar newDate = new GregorianCalendar(2016, 8, 7);
+        contactManagerTest.addFutureMeeting(tempContactList, newDate);
         List<Meeting> meetings = contactManagerTest.getMeetingListOn(futureDate);
         Assert.assertEquals(3, meetings.size());
+    }
+
+    @Test (expected = NullPointerException.class)
+    public void testGetMeetingListOnNullDate() throws Exception {
+        List<Meeting> meetings = contactManagerTest.getMeetingListOn(null);
+
     }
 
     @Test

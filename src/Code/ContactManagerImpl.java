@@ -15,18 +15,19 @@ public class ContactManagerImpl implements ContactManager {
     private int contactID = 1;
     private int meetingID = 1;
 
-    public ContactManagerImpl(){
+    public ContactManagerImpl() {
         contactList = new HashSet<>();
         meetingList = new HashSet<>();
     }
+
     @Override
     public int addFutureMeeting(Set<Contact> contacts, Calendar date) {
-        if (!(Calendar.getInstance().compareTo(date) < 0)){
+        if (!(Calendar.getInstance().compareTo(date) < 0)) {
             throw new IllegalArgumentException();
         }
         meetingList.add(new FutureMeetingImpl(meetingID, date, contacts));
         meetingID++;
-        return meetingID-1;
+        return meetingID - 1;
     }
 
     @Override
@@ -51,6 +52,9 @@ public class ContactManagerImpl implements ContactManager {
 
     @Override
     public List<Meeting> getMeetingListOn(Calendar date) {
+        if (date == null) {
+            throw new NullPointerException();
+        }
         List<Meeting> filtered = meetingList.stream().filter(c -> {
             boolean onThisDay = false;
             for (int i = 0; i < meetingList.size(); i++) {
@@ -60,7 +64,7 @@ public class ContactManagerImpl implements ContactManager {
             }
             return onThisDay;
         }).collect((Collectors.toList()));
-     return filtered;
+        return filtered;
     }
 
     @Override
@@ -80,9 +84,9 @@ public class ContactManagerImpl implements ContactManager {
 
     @Override
     public int addNewContact(String name, String notes) {
-        if(notes.isEmpty()) {
+        if (notes.isEmpty()) {
             throw new IllegalArgumentException();
-        }else{
+        } else {
             int TempID = contactID;
             contactID++;
             contactList.add(new ContactImpl(TempID, name, notes));
@@ -92,7 +96,7 @@ public class ContactManagerImpl implements ContactManager {
 
     @Override
     public Set<Contact> getContacts(String name) {
-        if(name == null){
+        if (name == null) {
             throw new NullPointerException();
         }
         return contactList.stream().filter((Contact a) -> a.getName().matches(".*" + name + ".*")).collect(Collectors.toSet());
@@ -100,9 +104,9 @@ public class ContactManagerImpl implements ContactManager {
 
     @Override
     public Set<Contact> getContacts(int... ids) {
-        if(ids == null){
+        if (ids == null) {
             throw new NullPointerException();
-        } else if (ids.length == 0){
+        } else if (ids.length == 0) {
             throw new IllegalArgumentException("No ID's provided");
         }
         Set<Contact> filteredSet = contactList.stream().filter((Contact b) -> {
@@ -118,13 +122,11 @@ public class ContactManagerImpl implements ContactManager {
             }
             return contactValid;
         }).collect(Collectors.toSet());
-        if(filteredSet.size()<ids.length){
+        if (filteredSet.size() < ids.length) {
             throw new IllegalArgumentException("One or more ID's do not exist in the database");
         }
         return filteredSet;
     }
-
-
 
 
     @Override
