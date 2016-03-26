@@ -5,16 +5,14 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class ContactManagerImplTest {
 
     private ContactManager contactManagerTest;
     private Calendar futureDate;
     private Calendar pastDate;
+    private Set<Contact> tempContactList;
 
     @Before
     public void setUp() throws Exception {
@@ -25,6 +23,13 @@ public class ContactManagerImplTest {
         contactManagerTest.addNewContact("Phileme", "Graeme is a  test");
         contactManagerTest.addNewContact("eme", "Graeme is a  test");
         contactManagerTest.addNewContact("Mark", "Graeme is a  test");
+        tempContactList = new HashSet<>();
+        tempContactList.add(new ContactImpl(1, "Graeme", "Test Notes"));
+        contactManagerTest.addFutureMeeting(tempContactList, futureDate);
+        tempContactList.add(new ContactImpl(2, "Mark", "Test Notes"));
+        contactManagerTest.addFutureMeeting(tempContactList, futureDate);
+        contactManagerTest.addFutureMeeting(tempContactList, futureDate);
+
     }
 
     @After
@@ -42,8 +47,6 @@ public class ContactManagerImplTest {
 
     @Test (expected = IllegalArgumentException.class)
     public void testAddFutureMeetingWPast() throws Exception {
-        Set<Contact> tempContactList = new HashSet<>();
-        tempContactList.add(new ContactImpl(1, "Graeme", "Test Notes"));
         int newMeetingID = contactManagerTest.addFutureMeeting(tempContactList, pastDate);
     }
 
@@ -69,7 +72,8 @@ public class ContactManagerImplTest {
 
     @Test
     public void testGetMeetingListOn() throws Exception {
-
+        List<Meeting> meetings = contactManagerTest.getMeetingListOn(futureDate);
+        Assert.assertEquals(3, meetings.size());
     }
 
     @Test

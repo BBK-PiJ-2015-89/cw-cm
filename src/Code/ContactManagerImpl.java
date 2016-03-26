@@ -112,6 +112,9 @@ public class ContactManagerImpl implements ContactManager {
         return filteredSet;
     }
 
+
+
+
     @Override
     public void flush() {
 
