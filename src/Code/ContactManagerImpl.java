@@ -18,9 +18,9 @@ public class ContactManagerImpl implements ContactManager {
     }
     @Override
     public int addFutureMeeting(Set<Contact> contacts, Calendar date) {
-        Calendar today = new GregorianCalendar();
-        if(date > today)
-
+        if (!(Calendar.getInstance().compareTo(date) < 0)){
+            throw new IllegalArgumentException();
+        }
         meetingList.add(new FutureMeetingImpl(meetingID, date, contacts));
         meetingID++;
         return meetingID-1;
