@@ -1,9 +1,6 @@
 package Code;
 
-import java.util.Calendar;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -21,6 +18,9 @@ public class ContactManagerImpl implements ContactManager {
     }
     @Override
     public int addFutureMeeting(Set<Contact> contacts, Calendar date) {
+        Calendar today = new GregorianCalendar();
+        if(date > today)
+
         meetingList.add(new FutureMeetingImpl(meetingID, date, contacts));
         meetingID++;
         return meetingID-1;
