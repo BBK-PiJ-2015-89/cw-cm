@@ -20,21 +20,8 @@ public class ContactManagerImpl implements ContactManager {
         if (contacts == null || date == null){
             throw new NullPointerException();
         }
-
-        if (!(contactList.containsAll(contacts))){
-            throw new IllegalArgumentException();
-        }
         int importContactSize = contacts.size();
-        System.out.println("Contact Size before: " + contacts.size());
-        for (Contact contact: contacts){
-            System.out.println(contact.getName());
-        }
         contacts.retainAll(contactList);
-        System.out.println("Contact Size after: " + contacts.size());
-        for (Contact contact: contacts){
-            System.out.println(contact.getName());
-        }
-
         if (contacts.size() < importContactSize || !(Calendar.getInstance().compareTo(date) < 0)){
             throw new IllegalArgumentException();
         }
@@ -129,21 +116,8 @@ public class ContactManagerImpl implements ContactManager {
 
     @Override
     public void addNewPastMeeting(Set<Contact> contacts, Calendar date, String text) {
-        /*Optional<Contact> highestContId = contacts.stream().max((a1, a2)-> a1.getId() - a2.getId());
-        if (!(Calendar.getInstance().compareTo(date) > 0) || (highestContId.isPresent() && highestContId.get().getId() > contactID-1)) {
-            throw new IllegalArgumentException();
-        }*/
         int importContactSize = contacts.size();
-        System.out.println("Contact Size before: " + contacts.size());
-        for (Contact contact: contacts){
-            System.out.println(contact.getName());
-        }
         contacts.retainAll(contactList);
-        System.out.println("Contact Size after: " + contacts.size());
-        for (Contact contact: contacts){
-            System.out.println(contact.getName());
-        }
-
         if (contacts.size() < importContactSize || !(Calendar.getInstance().compareTo(date) > 0)){
             throw new IllegalArgumentException();
     }
