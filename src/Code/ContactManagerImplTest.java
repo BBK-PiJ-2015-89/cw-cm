@@ -103,7 +103,9 @@ public class ContactManagerImplTest {
 
     @Test
     public void testAddNewPastMeeting() throws Exception {
-
+        contactManagerTest.addNewPastMeeting(contactManagerTest.getContacts(1), new GregorianCalendar(2014,5,2,12,30), "This is a test meeting in the past");
+        List<Meeting> tempList = contactManagerTest.getMeetingListOn(new GregorianCalendar(2014,5,2));
+        Assert.assertEquals(1, tempList.size());
     }
 
     @Test

@@ -79,8 +79,6 @@ public class ContactManagerImpl implements ContactManager {
 
     public boolean contactInSet(int id, Set<Contact> contactSet) {
         return contactSet.stream().filter(a -> id == a.getId()).findFirst().isPresent();
-
-
     }
 
     @Override
