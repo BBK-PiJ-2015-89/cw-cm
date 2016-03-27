@@ -74,6 +74,18 @@ public class ContactManagerImplTest {
         Assert.assertEquals(2, future.getId());
     }
 
+    @Test
+    public void testGetFutureMeetingBig() throws Exception {
+        Meeting future = contactManagerTest.getFutureMeeting(25000);
+        Assert.assertEquals(null, future);
+    }
+
+    @Test
+    public void testGetPastMeetingBig() throws Exception {
+        Meeting past = contactManagerTest.getPastMeeting(25000);
+        Assert.assertEquals(null, past);
+    }
+
     @Test (expected = IllegalArgumentException.class)
     public void testGetFutureMeetingInvalid() throws Exception {
         Meeting future = contactManagerTest.getFutureMeeting(4);
