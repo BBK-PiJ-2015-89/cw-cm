@@ -74,6 +74,12 @@ public class ContactManagerImplTest {
 
     }
 
+    @Test (expected = IllegalArgumentException.class)
+    public void testGetFutureMeetingListInvalid() throws Exception {
+        Contact temp = contactManagerTest.getContacts(20).stream().findFirst().get();
+        List<Meeting> results = contactManagerTest.getFutureMeetingList(temp);
+    }
+
     @Test
     public void testGetMeetingListOn() throws Exception {
         List<Meeting> meetings = contactManagerTest.getMeetingListOn(new GregorianCalendar(2016,5,2));
