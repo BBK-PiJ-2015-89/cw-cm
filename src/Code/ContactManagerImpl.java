@@ -140,7 +140,18 @@ public class ContactManagerImpl implements ContactManager {
 
     @Override
     public PastMeeting addMeetingNotes(int id, String text) {
-        return null;
+        Meeting current = getMeeting(id);
+        String notes = "";
+        if (current instanceof PastMeeting){
+            notes = ((PastMeeting) current).getNotes();
+            notes += " ";
+        }
+        Calendar date = current.getDate();
+        Set<Contact> contacts = current.getContacts();
+        notes += notes;
+        meetingList.remove(current);
+        meetingList.add(new PastMeetingImpl(id, date, contacts, notes));
+        return getPastMeeting(id);
     }
 
     @Override
