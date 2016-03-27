@@ -140,7 +140,16 @@ public class ContactManagerImpl implements ContactManager {
 
     @Override
     public PastMeeting addMeetingNotes(int id, String text) {
+        if (text == null){
+            throw new NullPointerException();
+        }
         Meeting current = getMeeting(id);
+        if (current == null){
+            throw new IllegalArgumentException();
+        }
+        if (current.getDate().compareTo(new GregorianCalendar()) >0) {
+            throw new IllegalStateException();
+        }
         String notes = "";
         if (current instanceof PastMeeting){
             notes = ((PastMeeting) current).getNotes();
@@ -148,7 +157,7 @@ public class ContactManagerImpl implements ContactManager {
         }
         Calendar date = current.getDate();
         Set<Contact> contacts = current.getContacts();
-        notes += notes;
+        notes += text;
         meetingList.remove(current);
         meetingList.add(new PastMeetingImpl(id, date, contacts, notes));
         return getPastMeeting(id);
