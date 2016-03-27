@@ -8,14 +8,14 @@ public class ContactImpl implements Contact {
     String name;
     StringBuilder notes;
 
-    public ContactImpl(int id, String name, String notes){
-        if(id <= 0) {
+    public ContactImpl(int id, String name, String notes) {
+        if (id <= 0) {
             throw new IllegalArgumentException("ID must be > 0");
-        } else if(notes == null) {
+        } else if (notes == null) {
             throw new NullPointerException("Notes value cannot be null.");
-        } else if(name == null) {
+        } else if (name == null) {
             throw new NullPointerException("The name value cannot be null");
-        } else if(name.isEmpty()) {
+        } else if (name.isEmpty()) {
             throw new IllegalArgumentException("You must enter a name");
         }
         this.id = id;
@@ -24,12 +24,12 @@ public class ContactImpl implements Contact {
         this.notes.append(notes);
     }
 
-    public ContactImpl(int id, String name){
-        if(id <= 0) {
+    public ContactImpl(int id, String name) {
+        if (id <= 0) {
             throw new IllegalArgumentException("ID must be > 0");
-        } else if(name == null) {
+        } else if (name == null) {
             throw new NullPointerException("The name value cannot be null");
-        } else if(name.isEmpty()) {
+        } else if (name.isEmpty()) {
             throw new IllegalArgumentException("You must enter a name");
         }
 
@@ -59,19 +59,26 @@ public class ContactImpl implements Contact {
     }
 
     @Override
-    public boolean equals(Object o){
-        if (o == this){
+    public boolean equals(Object o) {
+        if (o == this) {
             return true;
         }
-        if (!(o instanceof Contact)){
+        if (!(o instanceof Contact)) {
             return false;
         }
         Contact c = (Contact) o;
 
-        if (c.getId() == id && c.getName() == name){
+        if (c.getId() == id && c.getName() == name) {
             return true;
         } else {
             return false;
         }
+    }
+
+    public int hashCode() {
+        int hash = 7;
+        hash = 31 * hash + id;
+        hash = 31 * hash + (null == name ? 0 : name.hashCode());
+        return hash;
     }
 }

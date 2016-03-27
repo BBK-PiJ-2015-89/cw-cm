@@ -12,7 +12,7 @@ public class ContactManagerImplTest {
     private ContactManager contactManagerTest;
     private Calendar futureDate;
     private Calendar pastDate;
-    private Set<Contact> tempContactList;
+    private Set<Contact> tempInvalidContactList;
 
     @Before
     public void setUp() throws Exception {
@@ -20,13 +20,13 @@ public class ContactManagerImplTest {
         futureDate = new GregorianCalendar(2016,5,2,12,15);
         pastDate = new GregorianCalendar(2014, 4, 20);
         contactManagerTest.addNewContact("Graeme", "Graeme is a  test");
-        contactManagerTest.addNewContact("Phileme", "Graeme is a  test");
+        contactManagerTest.addNewContact("Phil1", "Phil is a  test");
         contactManagerTest.addNewContact("eme", "Graeme is a  test");
         contactManagerTest.addNewContact("Mark", "Graeme is a  test");
-        tempContactList = new HashSet<>();
-        //tempContactList.add(new ContactImpl(1, "Graeme", "Test Notes"));
+        tempInvalidContactList = new HashSet<>();
+        //tempInvalidContactList.add(new ContactImpl(1, "Graeme", "Test Notes"));
         contactManagerTest.addFutureMeeting(contactManagerTest.getContacts(1), new GregorianCalendar(2016,5,2,12,15));
-        tempContactList.add(new ContactImpl(70, "Mark", "Test Notes"));
+        tempInvalidContactList.add(new ContactImpl(8, "Phil1", "Graeme is a test"));
         contactManagerTest.addFutureMeeting(contactManagerTest.getContacts(1,2), new GregorianCalendar(2016,5,2,12,10));
         contactManagerTest.addFutureMeeting(contactManagerTest.getContacts(1), new GregorianCalendar(2016,5,2,12,30));
 
@@ -52,7 +52,7 @@ public class ContactManagerImplTest {
 
     @Test (expected = IllegalArgumentException.class)
     public void testAddFutureMeetingWPastInvalidContact() throws Exception {
-        int newMeetingID = contactManagerTest.addFutureMeeting(tempContactList, new GregorianCalendar(2016,6,2,12,15));
+        int newMeetingID = contactManagerTest.addFutureMeeting(tempInvalidContactList, new GregorianCalendar(2016,6,2,12,15));
     }
 
 
@@ -120,6 +120,20 @@ public class ContactManagerImplTest {
     }
 
     @Test
+    public void testAddNewPastMeetingwithValidContact(){
+        Set<Contact> tempValidContactList = new HashSet<>();
+        tempValidContactList.add(new ContactImpl(2, "Phil1", "Phil is a test"));
+        contactManagerTest.addNewPastMeeting(tempValidContactList, new GregorianCalendar(2014,2,4), "This is another test meeting");
+
+
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void testAddNewPastMeetingInvalidContact() throws Exception {
+        contactManagerTest.addNewPastMeeting(tempInvalidContactList, new GregorianCalendar(2014, 5, 2, 12, 30), "This is a test meeting in the past");
+    }
+
+    @Test
     public void testAddMeetingNotes() throws Exception {
 
     }
@@ -152,7 +166,7 @@ public class ContactManagerImplTest {
     @Test
     public void testGetContactsByString() throws Exception {
         Set<Contact> filteredSet = contactManagerTest.getContacts("eme");
-        Assert.assertEquals(3, filteredSet.size());
+        Assert.assertEquals(2, filteredSet.size());
     }
 
     @Test
