@@ -17,7 +17,7 @@ public class ContactManagerImplTest {
     @Before
     public void setUp() throws Exception {
         contactManagerTest = new ContactManagerImpl();
-        futureDate = new GregorianCalendar(2016,5,2);
+        futureDate = new GregorianCalendar(2016,5,2,12,15);
         pastDate = new GregorianCalendar(2014, 4, 20);
         contactManagerTest.addNewContact("Graeme", "Graeme is a  test");
         contactManagerTest.addNewContact("Phileme", "Graeme is a  test");
@@ -25,10 +25,10 @@ public class ContactManagerImplTest {
         contactManagerTest.addNewContact("Mark", "Graeme is a  test");
         tempContactList = new HashSet<>();
         tempContactList.add(new ContactImpl(1, "Graeme", "Test Notes"));
-        contactManagerTest.addFutureMeeting(tempContactList, futureDate);
+        contactManagerTest.addFutureMeeting(tempContactList, new GregorianCalendar(2016,5,2,12,15));
         tempContactList.add(new ContactImpl(2, "Mark", "Test Notes"));
-        contactManagerTest.addFutureMeeting(tempContactList, futureDate);
-        contactManagerTest.addFutureMeeting(tempContactList, futureDate);
+        contactManagerTest.addFutureMeeting(tempContactList, new GregorianCalendar(2016,5,2,12,10));
+        contactManagerTest.addFutureMeeting(tempContactList, new GregorianCalendar(2016,5,2,12,30));
 
     }
 
@@ -41,8 +41,8 @@ public class ContactManagerImplTest {
     public void testAddFutureMeeting() throws Exception {
         Set<Contact> tempContactList = new HashSet<>();
         tempContactList.add(new ContactImpl(1, "Graeme", "Test Notes"));
-        int newMeetingID = contactManagerTest.addFutureMeeting(tempContactList, futureDate);
-        Assert.assertTrue(newMeetingID>0);
+        int newMeetingID = contactManagerTest.addFutureMeeting(tempContactList, new GregorianCalendar(2016,6,2,12,15));
+        Assert.assertTrue(newMeetingID > 0);
     }
 
     @Test (expected = IllegalArgumentException.class)
@@ -62,7 +62,8 @@ public class ContactManagerImplTest {
 
     @Test
     public void testGetMeeting() throws Exception {
-
+        Meeting fT1 = contactManagerTest.getMeeting(2);
+        Assert.assertEquals(2, fT1.getId());
     }
 
     @Test
@@ -72,9 +73,11 @@ public class ContactManagerImplTest {
 
     @Test
     public void testGetMeetingListOn() throws Exception {
-        Calendar newDate = new GregorianCalendar(2016, 8, 7);
-        contactManagerTest.addFutureMeeting(tempContactList, newDate);
-        List<Meeting> meetings = contactManagerTest.getMeetingListOn(futureDate);
+        List<Meeting> meetings = contactManagerTest.getMeetingListOn(new GregorianCalendar(2016,5,2));
+        for(int i = 0; i<meetings.size(); i++){
+            Meeting temp = meetings.get(i);
+            System.out.println(temp.getDate().get(Calendar.HOUR_OF_DAY) + ":" + temp.getDate().get(Calendar.MINUTE));
+        }
         Assert.assertEquals(3, meetings.size());
     }
 
@@ -115,7 +118,7 @@ public class ContactManagerImplTest {
     }
 
     @Test (expected = NullPointerException.class)
-    public void testAddNewContactWithnullNotes() throws Exception {
+    public void testAddNewContactWithNullNotes() throws Exception {
         contactManagerTest.addNewContact("Graeme", null);
     }
 

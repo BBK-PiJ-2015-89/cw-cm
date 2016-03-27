@@ -1,9 +1,6 @@
 package Code;
 
-import java.util.Calendar;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -42,8 +39,13 @@ public class ContactManagerImpl implements ContactManager {
 
     @Override
     public Meeting getMeeting(int id) {
+        Optional<Meeting> foundMeeting = meetingList.stream().filter(c -> c.getId() == id).findFirst();
+        if(foundMeeting.isPresent()){
+            return foundMeeting.get();
+        }
         return null;
     }
+
 
     @Override
     public List<Meeting> getFutureMeetingList(Contact contact) {
@@ -52,19 +54,24 @@ public class ContactManagerImpl implements ContactManager {
 
     @Override
     public List<Meeting> getMeetingListOn(Calendar date) {
+        Comparator<Meeting> byTime = (e1, e2) -> e1
+                .getDate().getTime().compareTo(e2.getDate().getTime());
+
         if (date == null) {
             throw new NullPointerException();
         }
-        List<Meeting> filtered = meetingList.stream().filter(c -> {
+        return meetingList.stream().filter(c -> {
             boolean onThisDay = false;
+            Calendar nextDay = (Calendar)date.clone();
+            nextDay.add(Calendar.DAY_OF_MONTH, 1);
             for (int i = 0; i < meetingList.size(); i++) {
-                if (c.getDate() == date) {
+                if (c.getDate().compareTo(date)>=0 && c.getDate().compareTo(nextDay)<0) {
                     onThisDay = true;
                 }
             }
             return onThisDay;
-        }).collect((Collectors.toList()));
-        return filtered;
+        }).sorted(byTime).collect((Collectors.toList()));
+
     }
 
     @Override
