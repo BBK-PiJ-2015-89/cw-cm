@@ -77,22 +77,6 @@ public class ContactManagerImpl implements ContactManager {
             throw new IllegalArgumentException("Contact not in list");
         }
         return meetingList.stream().filter(a -> (a instanceof FutureMeeting && contactInSet(id, a.getContacts()))).sorted(byTime).collect(Collectors.toList());
-
-
-
-       /* return meetingList.stream().filter(c -> {
-            for (int i = 0; i < meetingList.size(); i++) {
-                Set<Contact> attendees = c.getContacts();
-                attendees.stream().filter(b -> {
-                    for (int j = 0; j < attendees.size(); j++) {
-                        if (b.getId() == contact.getId()) {
-                            matchesContact = true;
-                        }
-                    }return matchesContact;
-                });
-            }
-            return matchesContact;
-        }).sorted(byTime).collect(Collectors.toList());*/
     }
 
     public boolean contactInSet(int id, Set<Contact> contactSet) {
@@ -123,7 +107,23 @@ public class ContactManagerImpl implements ContactManager {
 
     @Override
     public List<PastMeeting> getPastMeetingListFor(Contact contact) {
-        return null;
+        if (contact == null) {
+            throw new NullPointerException();
+        }
+        Comparator<Meeting> byTime = (e1, e2) -> e1
+                .getDate().getTime().compareTo(e2.getDate().getTime());
+
+        int id = contact.getId();
+        Optional<Contact> contactInList = contactList.stream().filter(a -> a.getId() == id).findFirst();
+        if (!(contactInList.isPresent())) {
+            throw new IllegalArgumentException("Contact not in list");
+        }
+        List<PastMeeting> returnList = new ArrayList<>();
+        List<Meeting> filteredList = meetingList.stream().filter(a -> (a instanceof PastMeeting && contactInSet(id, a.getContacts()))).sorted(byTime).collect(Collectors.toList());
+        for (Meeting pm : filteredList){
+            returnList.add((PastMeeting)pm);
+        }
+        return returnList;
     }
 
     @Override

@@ -29,7 +29,8 @@ public class ContactManagerImplTest {
         tempInvalidContactList.add(new ContactImpl(8, "Phil1", "Graeme is a test"));
         contactManagerTest.addFutureMeeting(contactManagerTest.getContacts(1, 2), new GregorianCalendar(2016, 5, 2, 12, 10));//id2
         contactManagerTest.addFutureMeeting(contactManagerTest.getContacts(1), new GregorianCalendar(2016,5,2,12,30));//id3
-        contactManagerTest.addNewPastMeeting(contactManagerTest.getContacts(1), new GregorianCalendar(2015,2,12), "This meeting was good");//id4
+        contactManagerTest.addNewPastMeeting(contactManagerTest.getContacts(1, 4), new GregorianCalendar(2015, 2, 12), "This meeting was good");//id4
+        contactManagerTest.addNewPastMeeting(contactManagerTest.getContacts(1, 4), new GregorianCalendar(2013,2,12), "This meeting was good");//id5
 
     }
 
@@ -129,8 +130,25 @@ public class ContactManagerImplTest {
 
     @Test
     public void testGetPastMeetingListFor() throws Exception {
-
+        Contact temp = contactManagerTest.getContacts(4).stream().findFirst().get();
+        List<PastMeeting> results = contactManagerTest.getPastMeetingListFor(temp);
+        Assert.assertEquals(2, results.size());
     }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void testGetPastMeetingListForInvalidContact() throws Exception {
+        Contact temp = contactManagerTest.getContacts(700).stream().findFirst().get();
+        List<PastMeeting> results = contactManagerTest.getPastMeetingListFor(temp);
+        Assert.assertEquals(2, results.size());
+    }
+
+    @Test (expected = NullPointerException.class)
+    public void testGetPastMeetingListForNullContact() throws Exception {
+        List<PastMeeting> results = contactManagerTest.getPastMeetingListFor(null);
+        Assert.assertEquals(2, results.size());
+    }
+
+
 
     @Test
     public void testAddNewPastMeeting() throws Exception {
@@ -145,7 +163,7 @@ public class ContactManagerImplTest {
     }
 
     @Test
-    public void testAddNewPastMeetingwithValidContact(){
+    public void testAddNewPastMeetingWithValidContact(){
         Set<Contact> tempValidContactList = new HashSet<>();
         tempValidContactList.add(new ContactImpl(2, "Phil1", "Phil is a test"));
         contactManagerTest.addNewPastMeeting(tempValidContactList, new GregorianCalendar(2014, 2, 4), "This is another test meeting");
