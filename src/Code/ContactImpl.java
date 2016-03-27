@@ -57,4 +57,21 @@ public class ContactImpl implements Contact {
     public void addNotes(String note) {
         notes.append(" " + note);
     }
+
+    @Override
+    public boolean equals(Object o){
+        if (o == this){
+            return true;
+        }
+        if (!(o instanceof Contact)){
+            return false;
+        }
+        Contact c = (Contact) o;
+
+        if (c.getId() == id && c.getName() == name){
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

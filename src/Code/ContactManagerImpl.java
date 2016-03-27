@@ -20,6 +20,7 @@ public class ContactManagerImpl implements ContactManager {
         if (!(Calendar.getInstance().compareTo(date) < 0)) {
             throw new IllegalArgumentException();
         }
+        contacts.stream().filter(c ->
         meetingList.add(new FutureMeetingImpl(meetingID, date, contacts));
         meetingID++;
         return meetingID - 1;
@@ -113,6 +114,7 @@ public class ContactManagerImpl implements ContactManager {
         if (!(Calendar.getInstance().compareTo(date) > 0)) {
             throw new IllegalArgumentException();
         }
+
         meetingList.add(new PastMeetingImpl(meetingID, date, contacts, text));
         meetingID++;
     }
