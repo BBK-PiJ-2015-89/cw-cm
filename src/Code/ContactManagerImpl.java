@@ -60,8 +60,7 @@ public class ContactManagerImpl implements ContactManager {
         if (!(contactInList.isPresent())){
             throw new IllegalArgumentException("Contact not in list");
         }
-        List<Meeting> filteredList = meetingList.stream().filter( a -> (a instanceof FutureMeeting && contactInSet(id, a.getContacts()))).sorted(byTime).collect(Collectors.toList());
-        return filteredList;
+        return meetingList.stream().filter( a -> (a instanceof FutureMeeting && contactInSet(id, a.getContacts()))).sorted(byTime).collect(Collectors.toList());
 
 
 
