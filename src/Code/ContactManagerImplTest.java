@@ -24,11 +24,11 @@ public class ContactManagerImplTest {
         contactManagerTest.addNewContact("eme", "Graeme is a  test");
         contactManagerTest.addNewContact("Mark", "Graeme is a  test");
         tempContactList = new HashSet<>();
-        tempContactList.add(new ContactImpl(1, "Graeme", "Test Notes"));
-        contactManagerTest.addFutureMeeting(tempContactList, new GregorianCalendar(2016,5,2,12,15));
-        tempContactList.add(new ContactImpl(2, "Mark", "Test Notes"));
-        contactManagerTest.addFutureMeeting(tempContactList, new GregorianCalendar(2016,5,2,12,10));
-        contactManagerTest.addFutureMeeting(tempContactList, new GregorianCalendar(2016,5,2,12,30));
+        //tempContactList.add(new ContactImpl(1, "Graeme", "Test Notes"));
+        contactManagerTest.addFutureMeeting(contactManagerTest.getContacts(1), new GregorianCalendar(2016,5,2,12,15));
+        //tempContactList.add(new ContactImpl(2, "Mark", "Test Notes"));
+        contactManagerTest.addFutureMeeting(contactManagerTest.getContacts(1,2), new GregorianCalendar(2016,5,2,12,10));
+        contactManagerTest.addFutureMeeting(contactManagerTest.getContacts(1), new GregorianCalendar(2016,5,2,12,30));
 
     }
 
@@ -68,6 +68,9 @@ public class ContactManagerImplTest {
 
     @Test
     public void testGetFutureMeetingList() throws Exception {
+        Contact temp = contactManagerTest.getContacts(1).stream().findFirst().get();
+        List<Meeting> results = contactManagerTest.getFutureMeetingList(temp);
+        Assert.assertEquals(3, results.size());
 
     }
 

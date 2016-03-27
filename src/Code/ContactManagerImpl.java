@@ -136,6 +136,7 @@ public class ContactManagerImpl implements ContactManager {
     }
 
 
+
     @Override
     public void flush() {
 
