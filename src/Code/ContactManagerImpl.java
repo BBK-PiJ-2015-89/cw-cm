@@ -33,7 +33,13 @@ public class ContactManagerImpl implements ContactManager {
 
     @Override
     public PastMeeting getPastMeeting(int id) {
-        return null;
+        Optional<Meeting> foundMeeting = meetingList.stream().filter(c -> c.getId() == id).findFirst();
+        if (!(foundMeeting.isPresent())) {
+            return null;
+        } else if (foundMeeting.get().getDate().compareTo(new GregorianCalendar())  > 0){
+            throw new IllegalArgumentException();
+        }
+        return (PastMeeting)foundMeeting.get();
     }
 
     @Override

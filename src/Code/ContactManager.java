@@ -34,7 +34,7 @@ public interface ContactManager {
      * @throws IllegalStateException if there is a meeting with that ID happening
      * in the future
      */
-    PastMeeting getPastMeeting(int id);
+    Meeting getPastMeeting(int id);
 
     /**
      * Returns the FUTURE meeting with the requested ID, or null if there is none.

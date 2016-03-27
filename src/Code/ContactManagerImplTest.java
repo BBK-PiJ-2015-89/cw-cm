@@ -60,7 +60,12 @@ public class ContactManagerImplTest {
     @Test
     public void testGetPastMeeting() throws Exception {
         Meeting old = contactManagerTest.getPastMeeting(4);
-        Assert.assertEquals(1, old.getId());
+        Assert.assertEquals(4, old.getId());
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void testGetPastMeetingFuture() throws Exception {
+        Meeting old = contactManagerTest.getPastMeeting(2);
     }
 
     @Test
