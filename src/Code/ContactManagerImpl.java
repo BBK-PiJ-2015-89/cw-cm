@@ -3,9 +3,7 @@ package Code;
 import java.util.*;
 import java.util.stream.Collectors;
 
-/**
- * Created by graemewilkinson on 25/03/16.
- */
+
 public class ContactManagerImpl implements ContactManager {
     private Set<Contact> contactList;
     private Set<Meeting> meetingList;
@@ -57,10 +55,10 @@ public class ContactManagerImpl implements ContactManager {
 
         int id = contact.getId();
         Optional<Contact> contactInList = contactList.stream().filter(a -> a.getId() == id).findFirst();
-        if (!(contactInList.isPresent())){
+        if (!(contactInList.isPresent())) {
             throw new IllegalArgumentException("Contact not in list");
         }
-        return meetingList.stream().filter( a -> (a instanceof FutureMeeting && contactInSet(id, a.getContacts()))).sorted(byTime).collect(Collectors.toList());
+        return meetingList.stream().filter(a -> (a instanceof FutureMeeting && contactInSet(id, a.getContacts()))).sorted(byTime).collect(Collectors.toList());
 
 
 
@@ -78,98 +76,99 @@ public class ContactManagerImpl implements ContactManager {
             return matchesContact;
         }).sorted(byTime).collect(Collectors.toList());*/
     }
-    public boolean contactInSet (int id, Set<Contact> contactSet){
+
+    public boolean contactInSet(int id, Set<Contact> contactSet) {
         return contactSet.stream().filter(a -> id == a.getId()).findFirst().isPresent();
 
 
     }
 
-        @Override
-        public List<Meeting> getMeetingListOn (Calendar date){
-            Comparator<Meeting> byTime = (e1, e2) -> e1
-                    .getDate().getTime().compareTo(e2.getDate().getTime());
+    @Override
+    public List<Meeting> getMeetingListOn(Calendar date) {
+        Comparator<Meeting> byTime = (e1, e2) -> e1
+                .getDate().getTime().compareTo(e2.getDate().getTime());
 
-            if (date == null) {
-                throw new NullPointerException();
-            }
-            return meetingList.stream().filter(c -> {
-                boolean onThisDay = false;
-                Calendar nextDay = (Calendar) date.clone();
-                nextDay.add(Calendar.DAY_OF_MONTH, 1);
-                for (int i = 0; i < meetingList.size(); i++) {
-                    if (c.getDate().compareTo(date) >= 0 && c.getDate().compareTo(nextDay) < 0) {
-                        onThisDay = true;
-                    }
+        if (date == null) {
+            throw new NullPointerException();
+        }
+        return meetingList.stream().filter(c -> {
+            boolean onThisDay = false;
+            Calendar nextDay = (Calendar) date.clone();
+            nextDay.add(Calendar.DAY_OF_MONTH, 1);
+            for (int i = 0; i < meetingList.size(); i++) {
+                if (c.getDate().compareTo(date) >= 0 && c.getDate().compareTo(nextDay) < 0) {
+                    onThisDay = true;
                 }
-                return onThisDay;
-            }).sorted(byTime).collect((Collectors.toList()));
-
-        }
-
-        @Override
-        public List<PastMeeting> getPastMeetingListFor (Contact contact){
-            return null;
-        }
-
-        @Override
-        public void addNewPastMeeting (Set < Contact > contacts, Calendar date, String text){
-
-        }
-
-        @Override
-        public PastMeeting addMeetingNotes ( int id, String text){
-            return null;
-        }
-
-        @Override
-        public int addNewContact (String name, String notes){
-            if (notes.isEmpty()) {
-                throw new IllegalArgumentException();
-            } else {
-                int TempID = contactID;
-                contactID++;
-                contactList.add(new ContactImpl(TempID, name, notes));
-                return TempID;
             }
-        }
+            return onThisDay;
+        }).sorted(byTime).collect((Collectors.toList()));
 
-        @Override
-        public Set<Contact> getContacts (String name){
-            if (name == null) {
-                throw new NullPointerException();
-            }
-            return contactList.stream().filter((Contact a) -> a.getName().matches(".*" + name + ".*")).collect(Collectors.toSet());
-        }
+    }
 
-        @Override
-        public Set<Contact> getContacts (int...ids){
-            if (ids == null) {
-                throw new NullPointerException();
-            } else if (ids.length == 0) {
-                throw new IllegalArgumentException("No ID's provided");
-            }
-            Set<Contact> filteredSet = contactList.stream().filter((Contact b) -> {
-                boolean contactValid = false;
-                for (int i = 0; i < ids.length; i++) {
-                    if (ids[i] == b.getId()) {
-                        contactValid = true;
-                    }
+    @Override
+    public List<PastMeeting> getPastMeetingListFor(Contact contact) {
+        return null;
+    }
 
-                    //else {
-                    //   throw new IllegalArgumentException("One or more ID's do not exist in the database");
-                    //}
-                }
-                return contactValid;
-            }).collect(Collectors.toSet());
-            if (filteredSet.size() < ids.length) {
-                throw new IllegalArgumentException("One or more ID's do not exist in the database");
-            }
-            return filteredSet;
-        }
+    @Override
+    public void addNewPastMeeting(Set<Contact> contacts, Calendar date, String text) {
 
+    }
 
-        @Override
-        public void flush () {
+    @Override
+    public PastMeeting addMeetingNotes(int id, String text) {
+        return null;
+    }
 
+    @Override
+    public int addNewContact(String name, String notes) {
+        if (notes.isEmpty()) {
+            throw new IllegalArgumentException();
+        } else {
+            int TempID = contactID;
+            contactID++;
+            contactList.add(new ContactImpl(TempID, name, notes));
+            return TempID;
         }
     }
+
+    @Override
+    public Set<Contact> getContacts(String name) {
+        if (name == null) {
+            throw new NullPointerException();
+        }
+        return contactList.stream().filter((Contact a) -> a.getName().matches(".*" + name + ".*")).collect(Collectors.toSet());
+    }
+
+    @Override
+    public Set<Contact> getContacts(int... ids) {
+        if (ids == null) {
+            throw new NullPointerException();
+        } else if (ids.length == 0) {
+            throw new IllegalArgumentException("No ID's provided");
+        }
+        Set<Contact> filteredSet = contactList.stream().filter((Contact b) -> {
+            boolean contactValid = false;
+            for (int id : ids) {
+                if (id == b.getId()) {
+                    contactValid = true;
+                }
+
+                //else {
+                //   throw new IllegalArgumentException("One or more ID's do not exist in the database");
+                //}
+            }
+            return contactValid;
+        }).collect(Collectors.toSet());
+        if (filteredSet.size() < ids.length) {
+            throw new IllegalArgumentException("One or more ID's do not exist in the database");
+        }
+        return filteredSet;
+    }
+
+
+    @Override
+    public void flush() {
+
+    }
+}
