@@ -162,9 +162,24 @@ public class ContactManagerImplTest {
 
     @Test
     public void testAddMeetingNotes() throws Exception {
-
+        PastMeeting returnedPastMeeting = contactManagerTest.addMeetingNotes(4, "Graeme said he would do action point 7 for tests");
+        Assert.assertEquals("This meeting was good Graeme said he would do action point 7 for tests", returnedPastMeeting.getNotes());
     }
 
+    @Test (expected = NullPointerException.class)
+    public void testAddMeetingNotesNullString() throws Exception {
+        PastMeeting returnedPastMeeting = contactManagerTest.addMeetingNotes(4, null);
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void testAddMeetingNotesNoMeeting() throws Exception {
+        PastMeeting returnedPastMeeting = contactManagerTest.addMeetingNotes(70000, "Graeme said he would do action point 7 for tests");
+    }
+
+    @Test (expected = IllegalStateException.class)
+    public void testAddMeetingNotesFuture() throws Exception {
+        PastMeeting returnedPastMeeting = contactManagerTest.addMeetingNotes(2, "Graeme said he would do action point 7 for tests");
+    }
     @Test
     public void testAddNewContactReturnPositiveInt() throws Exception {
         Assert.assertTrue(contactManagerTest.addNewContact("Graeme", "Test User") > 0);
