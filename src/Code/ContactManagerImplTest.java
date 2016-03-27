@@ -70,7 +70,13 @@ public class ContactManagerImplTest {
 
     @Test
     public void testGetFutureMeeting() throws Exception {
+        Meeting future = contactManagerTest.getFutureMeeting(2);
+        Assert.assertEquals(2, future.getId());
+    }
 
+    @Test (expected = IllegalArgumentException.class)
+    public void testGetFutureMeetingInvalid() throws Exception {
+        Meeting future = contactManagerTest.getFutureMeeting(4);
     }
 
     @Test
