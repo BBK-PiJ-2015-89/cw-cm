@@ -58,6 +58,14 @@ public class ContactImpl implements Contact {
         notes.append(" " + note);
     }
 
+
+    /**
+     * Overriden equals to ensure that the parameter's of the object are checked, rather than the object address.
+     * I am happy that the contacts are equal if both the ID and Name match.
+     *
+     * @param o the object to be checked for equality
+     * @return True if object is equal, otherwise false.
+     */
     @Override
     public boolean equals(Object o) {
         if (o == this) {
@@ -75,6 +83,13 @@ public class ContactImpl implements Contact {
         }
     }
 
+    /**
+     * Overridden hashCode to ensure that codes are allocated based on the ID and Name of the contact.
+     * This ensures that any java library methods detect equality based on the parameteres, not the object
+     * address.
+     *
+     * @return and hashCode in the form of an int for the object created.
+     */
     public int hashCode() {
         int hash = 7;
         hash = 31 * hash + id;
