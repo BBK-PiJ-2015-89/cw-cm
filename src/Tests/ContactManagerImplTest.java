@@ -7,6 +7,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
 import java.util.*;
 
 public class ContactManagerImplTest {
@@ -18,6 +19,10 @@ public class ContactManagerImplTest {
 
     @Before
     public void setUp() throws Exception {
+        File cFile = new File("contacts.txt"); //check if file exists
+        if(cFile.exists()) {
+            cFile.delete();
+        }
         contactManagerTest = new ContactManagerImpl();
         futureDate = new GregorianCalendar(2016,5,2,12,15);
         pastDate = new GregorianCalendar(2014, 4, 20);
@@ -56,7 +61,7 @@ public class ContactManagerImplTest {
 
     @Test (expected = IllegalArgumentException.class)
     public void testAddFutureMeetingWPastInvalidContact() throws Exception {
-        int newMeetingID = contactManagerTest.addFutureMeeting(tempInvalidContactList, new GregorianCalendar(2016,6,2,12,15));
+        int newMeetingID = contactManagerTest.addFutureMeeting(tempInvalidContactList, new GregorianCalendar(2016, 6, 2, 12, 15));
     }
 
 
@@ -149,8 +154,6 @@ public class ContactManagerImplTest {
         List<PastMeeting> results = contactManagerTest.getPastMeetingListFor(null);
         Assert.assertEquals(2, results.size());
     }
-
-
 
     @Test
     public void testAddNewPastMeeting() throws Exception {
@@ -268,11 +271,18 @@ public class ContactManagerImplTest {
 
     @Test
     public void testMeetingsAfterFlush(){
-        List<Meeting> tempList = contactManagerTest.getMeetingListOn(new GregorianCalendar(2015,5,2));
-        int total = tempList.size();
+        List<Meeting> currentMeetings = contactManagerTest.getMeetingListOn(new GregorianCalendar(2016,5,2));
+        int size = currentMeetings.size();
         contactManagerTest.flush();
-        tempList = contactManagerTest.getMeetingListOn(new GregorianCalendar(2015,5,2));
-        Assert.assertEquals(total, tempList.size());
+        contactManagerTest = new ContactManagerImpl();
+        List<Meeting> currentMeetingsNew = contactManagerTest.getMeetingListOn(new GregorianCalendar(2016, 5, 2));
+        Assert.assertEquals(size, currentMeetingsNew.size());
     }
 
+    @Test
+    public void testMeetingsAfterFlushWithOutFlush(){
+        contactManagerTest = new ContactManagerImpl();
+        List<Meeting> currentMeetingsNew = contactManagerTest.getMeetingListOn(new GregorianCalendar(2016,5,2));
+        Assert.assertEquals(0, currentMeetingsNew.size());
+    }
 }

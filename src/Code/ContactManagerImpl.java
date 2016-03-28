@@ -10,10 +10,12 @@ public class ContactManagerImpl implements ContactManager, Serializable {
     private static final String FILE = "contacts.txt";
     private Set<Contact> contactList;
     private Set<Meeting> meetingList;
-    private int contactID = 1;
-    private int meetingID = 1;
+    private int contactID;
+    private int meetingID;
 
     public ContactManagerImpl() {
+        contactID = 1;
+        meetingID= 1;
         contactList = new HashSet<>();
         meetingList = new HashSet<>();
         readFromFile();
@@ -238,7 +240,9 @@ public class ContactManagerImpl implements ContactManager, Serializable {
         }
     }
 }
-    public void readFromFile(){
+    private void readFromFile(){
+        File cFile = new File("contacts.txt");
+        if(cFile.exists()) {
         ObjectInputStream fileIn = null;
         int fromFileContactID = 0;
         int fromFileMeetingID = 0;
@@ -279,6 +283,5 @@ public class ContactManagerImpl implements ContactManager, Serializable {
             meetingList = fromFileMeetings;
         }
     }
-
-
+}
 }
