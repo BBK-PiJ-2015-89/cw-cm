@@ -51,4 +51,9 @@ public abstract class MeetingImpl implements Meeting, Serializable {
     public Set<Contact> getContacts() {
         return contacts;
     }
+
+    @Override
+    public String toString() {
+        return id + ", " + date + ", ";
+    }
 }

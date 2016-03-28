@@ -13,7 +13,7 @@ public class ContactImplTest {
     @org.junit.Before
     public void setUp() throws Exception {
         one = new ContactImpl(1, "Graeme", "Member of staff");
-        two = new ContactImpl(2, "Philip", "External Staff Member");
+        two = new ContactImpl(2, "Phil", "External Staff Member");
     }
 
     @org.junit.After

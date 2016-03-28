@@ -30,4 +30,9 @@ public class PastMeetingImpl extends MeetingImpl implements PastMeeting {
     public String getNotes() {
         return this.notes;
     }
+
+    @Override
+    public String toString() {
+        return id + ", " + date + ", " + "notes: " + notes;
+    }
 }

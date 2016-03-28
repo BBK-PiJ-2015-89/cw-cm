@@ -12,10 +12,11 @@ public class ContactManagerImpl implements ContactManager, Serializable {
     private Set<Meeting> meetingList;
     private int contactID;
     private int meetingID;
+    private final static int MAX = Integer.MAX_VALUE;
 
     public ContactManagerImpl() {
         contactID = 1;
-        meetingID= 1;
+        meetingID = 1;
         contactList = new HashSet<>();
         meetingList = new HashSet<>();
         readFromFile();
@@ -23,6 +24,9 @@ public class ContactManagerImpl implements ContactManager, Serializable {
 
     @Override
     public int addFutureMeeting(Set<Contact> contacts, Calendar date) {
+        if(maxMeeting()){
+            throw new IllegalStateException("No more meeting spaces");
+        }
         if (contacts == null || date == null) {
             throw new NullPointerException();
         }
@@ -134,6 +138,9 @@ public class ContactManagerImpl implements ContactManager, Serializable {
 
     @Override
     public void addNewPastMeeting(Set<Contact> contacts, Calendar date, String text) {
+        if(maxMeeting()){
+            throw new IllegalStateException("No more meeting spaces");
+        }
         int importContactSize = contacts.size();
         contacts.retainAll(contactList);
         if (contacts.size() < importContactSize || !(Calendar.getInstance().compareTo(date) > 0)) {
@@ -171,6 +178,9 @@ public class ContactManagerImpl implements ContactManager, Serializable {
 
     @Override
     public int addNewContact(String name, String notes) {
+        if(maxContact()){
+            throw new IllegalStateException("Max contents reached");
+        }
         if (notes.isEmpty()) {
             throw new IllegalArgumentException();
         } else {
@@ -235,53 +245,68 @@ public class ContactManagerImpl implements ContactManager, Serializable {
                 if (fileOut != null) {
                     fileOut.close();
                 }
-            } catch(IOException g) {
+            } catch (IOException g) {
                 g.printStackTrace();
-        }
-    }
-}
-    private void readFromFile(){
-        File cFile = new File("contacts.txt");
-        if(cFile.exists()) {
-        ObjectInputStream fileIn = null;
-        int fromFileContactID = 0;
-        int fromFileMeetingID = 0;
-        Set<Meeting> fromFileMeetings = new HashSet<>();
-        Set<Contact> fromFileContacts = new HashSet<>();
-        try {
-            fileIn = new ObjectInputStream(new BufferedInputStream((new FileInputStream(FILE))));
-
-            fromFileContactID = fileIn.readInt();
-            fromFileMeetingID = fileIn.readInt();
-            fromFileContacts = (Set<Contact>)fileIn.readObject();
-            fromFileMeetings = (Set<Meeting>)fileIn.readObject();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException f) {
-            f.printStackTrace();
-        } catch (IOException g) {
-            g.printStackTrace();
-        }
-        try{
-            if(fileIn != null){
-                fileIn.close();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        if(fromFileContactID != 0){
-            contactID = fromFileContactID;
-        }
-        if(fromFileMeetingID != 0){
-            meetingID = fromFileMeetingID;
-        }
-        if(fromFileContacts != null){
-            contactList = fromFileContacts;
-        }
-        if(fromFileMeetings != null){
-            meetingList = fromFileMeetings;
         }
     }
-}
+
+    private void readFromFile() {
+        File cFile = new File("contacts.txt");
+        if (cFile.exists()) {
+            ObjectInputStream fileIn = null;
+            int fromFileContactID = 0;
+            int fromFileMeetingID = 0;
+            Set<Meeting> fromFileMeetings = new HashSet<>();
+            Set<Contact> fromFileContacts = new HashSet<>();
+            try {
+                fileIn = new ObjectInputStream(new BufferedInputStream((new FileInputStream(FILE))));
+
+                fromFileContactID = fileIn.readInt();
+                fromFileMeetingID = fileIn.readInt();
+                fromFileContacts = (Set<Contact>) fileIn.readObject();
+                fromFileMeetings = (Set<Meeting>) fileIn.readObject();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (FileNotFoundException f) {
+                f.printStackTrace();
+            } catch (IOException g) {
+                g.printStackTrace();
+            }
+            try {
+                if (fileIn != null) {
+                    fileIn.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            if (fromFileContactID != 0) {
+                contactID = fromFileContactID;
+            }
+            if (fromFileMeetingID != 0) {
+                meetingID = fromFileMeetingID;
+            }
+            if (fromFileContacts != null) {
+                contactList = fromFileContacts;
+            }
+            if (fromFileMeetings != null) {
+                meetingList = fromFileMeetings;
+            }
+        }
+    }
+
+    private boolean maxContact() {
+        if (contactID == MAX) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean maxMeeting() {
+        if (meetingID == MAX) {
+            return true;
+        }
+        return false;
+    }
 }

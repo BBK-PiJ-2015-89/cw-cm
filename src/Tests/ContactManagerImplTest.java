@@ -26,10 +26,10 @@ public class ContactManagerImplTest {
         contactManagerTest = new ContactManagerImpl();
         futureDate = new GregorianCalendar(2016,5,2,12,15);
         pastDate = new GregorianCalendar(2014, 4, 20);
-        contactManagerTest.addNewContact("Graeme", "Graeme is a  test");
-        contactManagerTest.addNewContact("Phil1", "Phil is a  test");
-        contactManagerTest.addNewContact("eme", "Graeme is a  test");
-        contactManagerTest.addNewContact("Mark", "Graeme is a  test");
+        contactManagerTest.addNewContact("Graeme", "Graeme is a  test"); //id1
+        contactManagerTest.addNewContact("Phil1", "Phil is a  test"); //id2
+        contactManagerTest.addNewContact("eme", "Graeme is a  test"); //id3
+        contactManagerTest.addNewContact("Mark", "Graeme is a  test"); //id 4
         tempInvalidContactList = new HashSet<>();
         //tempInvalidContactList.add(new ContactImpl(1, "Graeme", "Test Notes"));
         contactManagerTest.addFutureMeeting(contactManagerTest.getContacts(1), new GregorianCalendar(2016,5,2,12,15));//id1
@@ -203,6 +203,8 @@ public class ContactManagerImplTest {
     public void testAddMeetingNotesFuture() throws Exception {
         PastMeeting returnedPastMeeting = contactManagerTest.addMeetingNotes(2, "Graeme said he would do action point 7 for tests");
     }
+
+
     @Test
     public void testAddNewContactReturnPositiveInt() throws Exception {
         Assert.assertTrue(contactManagerTest.addNewContact("Graeme", "Test User") > 0);
@@ -284,5 +286,14 @@ public class ContactManagerImplTest {
         contactManagerTest = new ContactManagerImpl();
         List<Meeting> currentMeetingsNew = contactManagerTest.getMeetingListOn(new GregorianCalendar(2016,5,2));
         Assert.assertEquals(0, currentMeetingsNew.size());
+    }
+
+    @Test
+    public void testAddingContactAfterFlushIDCorrect() {
+        contactManagerTest.flush();
+        contactManagerTest = new ContactManagerImpl();
+        contactManagerTest.addNewContact("John", "Very Sick");
+        Set<Contact> returnedContact = contactManagerTest.getContacts(1,2,3,4,5);
+        System.out.println(returnedContact.toString());
     }
 }

@@ -94,4 +94,9 @@ public class ContactImpl implements Contact, Serializable {
         hash = 31 * hash + name.hashCode();
         return hash;
     }
+
+    @Override
+    public String toString() {
+        return id + ", " + name + ", " + "notes: " + notes;
+    }
 }
