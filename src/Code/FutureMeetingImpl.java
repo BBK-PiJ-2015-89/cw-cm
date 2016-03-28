@@ -4,7 +4,7 @@ import java.util.Calendar;
 import java.util.Set;
 
 /**
- * Created by graemewilkinson on 24/03/16.
+ * Created by BBK-PiJ-2015-89
  */
 public class FutureMeetingImpl extends MeetingImpl implements FutureMeeting {
 

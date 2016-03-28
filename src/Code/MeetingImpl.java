@@ -3,7 +3,9 @@ package Code;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Set;
-
+/**
+ * Created by BBK-PiJ-2015-89
+ */
 public abstract class MeetingImpl implements Meeting, Serializable {
 
     private int id;
