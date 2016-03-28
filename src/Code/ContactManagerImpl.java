@@ -72,7 +72,6 @@ public class ContactManagerImpl implements ContactManager, Serializable {
         return null;
     }
 
-
     @Override
     public List<Meeting> getFutureMeetingList(Contact contact) {
         if (contact == null) {
@@ -83,22 +82,11 @@ public class ContactManagerImpl implements ContactManager, Serializable {
 
         int id = contact.getId();
         String name = contact.getName();
-        Optional<Contact> contactInList = contactList.stream().filter(a -> a.getId() == id && Objects.equals(a.getName(), name)).findFirst();
+        Optional<Contact> contactInList = contactList.stream().filter(a -> a.getId() == id && Objects.equals(a.getName(), name)).findFirst();//check is passed in contact is valid by name and ID
         if (!(contactInList.isPresent())) {
             throw new IllegalArgumentException("Contact not in list");
         }
-        return meetingList.stream().filter(a -> (a instanceof FutureMeeting && contactInSet(id, a.getContacts()))).sorted(byTime).collect(Collectors.toList());
-    }
-
-
-    /**
-     * Checks whether the passed in contact
-     * @param id
-     * @param contactSet
-     * @return
-     */
-    private boolean contactInSet(int id, Set<Contact> contactSet) {
-        return contactSet.stream().filter(a -> id == a.getId()).findFirst().isPresent();
+        return meetingList.stream().filter(a -> (a instanceof FutureMeeting && contactInList.isPresent())).sorted(byTime).collect(Collectors.toList());
     }
 
     @Override
@@ -137,7 +125,7 @@ public class ContactManagerImpl implements ContactManager, Serializable {
             throw new IllegalArgumentException("Contact not in list");
         }
         List<PastMeeting> returnList = new ArrayList<>();
-        List<Meeting> filteredList = meetingList.stream().filter(a -> (a instanceof PastMeeting && contactInSet(id, a.getContacts()))).sorted(byTime).collect(Collectors.toList());
+        List<Meeting> filteredList = meetingList.stream().filter(a -> (a instanceof PastMeeting && contactInList.isPresent())).sorted(byTime).collect(Collectors.toList());
         returnList.addAll(filteredList.stream().map(pm -> (PastMeeting) pm).collect(Collectors.toList()));
         return returnList;
     }
@@ -256,7 +244,7 @@ public class ContactManagerImpl implements ContactManager, Serializable {
     }
 
     /**
-     * Reads the ID counters, and contact and meeting sets from file back to the Contact Manager.
+     * Reads the ID counters, contact and meeting sets from file back to the Contact Manager.
      */
     private void readFromFile() {
         File cFile = new File("contacts.txt");
