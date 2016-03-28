@@ -15,11 +15,11 @@ public class ContactManagerImpl implements ContactManager, Serializable {
     private final static int MAX = Integer.MAX_VALUE;
 
     public ContactManagerImpl() {
-        contactID = 1;
-        meetingID = 1;
+        contactID = 1; //counter initialised
+        meetingID = 1; //counter initialised
         contactList = new HashSet<>();
         meetingList = new HashSet<>();
-        readFromFile();
+        readFromFile(); //counters need to set at correct level so will be read from file, if available. Contact and Meeting lists too.
     }
 
     @Override
@@ -190,7 +190,7 @@ public class ContactManagerImpl implements ContactManager, Serializable {
         if (name == null) {
             throw new NullPointerException();
         }
-        return contactList.stream().filter((Contact a) -> a.getName().matches(".*" + name + ".*")).collect(Collectors.toSet());
+        return contactList.stream().filter((Contact a) -> a.getName().matches(".*" + name + ".*")).collect(Collectors.toSet()); //filter set by names that contain the string passed in.
     }
 
     @Override
@@ -203,17 +203,13 @@ public class ContactManagerImpl implements ContactManager, Serializable {
         Set<Contact> filteredSet = contactList.stream().filter((Contact b) -> {
             boolean contactValid = false;
             for (int id : ids) {
-                if (id == b.getId()) {
+                if (id == b.getId()) { //iterate through the set of contacts matching ID's and filtering those contacts to a new list.
                     contactValid = true;
                 }
-
-                //else {
-                //   throw new IllegalArgumentException("One or more ID's do not exist in the database");
-                //}
             }
             return contactValid;
         }).collect(Collectors.toSet());
-        if (filteredSet.size() < ids.length) {
+        if (filteredSet.size() < ids.length) { //check size of list, if it is not same size, then must be some ID's missing.
             throw new IllegalArgumentException("One or more ID's do not exist in the database");
         }
         return filteredSet;
@@ -223,7 +219,7 @@ public class ContactManagerImpl implements ContactManager, Serializable {
     @Override
     public void flush() {
         ObjectOutputStream fileOut = null;
-        try {
+        try { //write 4 main objects/ints to external file
             fileOut = new ObjectOutputStream((new BufferedOutputStream(new FileOutputStream(FILE))));
             fileOut.writeInt(contactID);
             fileOut.writeInt(meetingID);
@@ -244,7 +240,7 @@ public class ContactManagerImpl implements ContactManager, Serializable {
     }
 
     /**
-     * Reads the ID counters, contact and meeting sets from file back to the Contact Manager.
+     * Reads the ID counters, contact and meeting retrieves them from file back to the Contact Manager.
      */
     private void readFromFile() {
         File cFile = new File("contacts.txt");
@@ -255,7 +251,7 @@ public class ContactManagerImpl implements ContactManager, Serializable {
             Set<Meeting> fromFileMeetings = new HashSet<>();
             Set<Contact> fromFileContacts = new HashSet<>();
             try {
-                fileIn = new ObjectInputStream(new BufferedInputStream((new FileInputStream(FILE))));
+                fileIn = new ObjectInputStream(new BufferedInputStream((new FileInputStream(FILE)))); //open file and start input stream, objects will come back, FIFO.
 
                 fromFileContactID = fileIn.readInt();
                 fromFileMeetingID = fileIn.readInt();
@@ -263,7 +259,7 @@ public class ContactManagerImpl implements ContactManager, Serializable {
                 fromFileMeetings = (Set<Meeting>) fileIn.readObject();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
-            } catch (IOException g) {
+            } catch (IOException g) { //removing this catch causes problems, even though software says it's same as above.
                 g.printStackTrace();
             }
             try {
@@ -274,7 +270,7 @@ public class ContactManagerImpl implements ContactManager, Serializable {
                 e.printStackTrace();
             }
 
-            if (fromFileContactID != 0) {
+            if (fromFileContactID != 0) { //this set of if statements to check if the file has actually been saved in the first place, if not, don't write over.
                 contactID = fromFileContactID;
             }
             if (fromFileMeetingID != 0) {
