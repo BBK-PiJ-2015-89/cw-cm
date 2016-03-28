@@ -10,8 +10,8 @@ public class ContactManagerImpl implements ContactManager, Serializable {
     private static final String FILE = "contacts.txt";
     private Set<Contact> contactList;
     private Set<Meeting> meetingList;
-    private int contactID;
-    private int meetingID;
+    private int contactID; // used to assign ID's to contacts, kept here so I can assign ID's before passing the contact through the constructor of Contact.
+    private int meetingID; // used to assign ID's to meetings, kept here so I can assign ID's before passing the contact through the constructor of Meeting.
     private final static int MAX = Integer.MAX_VALUE;
 
     public ContactManagerImpl() {
