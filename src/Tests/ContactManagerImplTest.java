@@ -270,9 +270,7 @@ public class ContactManagerImplTest {
     public void testMeetingsAfterFlush(){
         List<Meeting> tempList = contactManagerTest.getMeetingListOn(new GregorianCalendar(2015,5,2));
         int total = tempList.size();
-
         contactManagerTest.flush();
-
         tempList = contactManagerTest.getMeetingListOn(new GregorianCalendar(2015,5,2));
         Assert.assertEquals(total, tempList.size());
     }

@@ -1,9 +1,10 @@
 package Code;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Set;
 
-public abstract class MeetingImpl implements Meeting {
+public abstract class MeetingImpl implements Meeting, Serializable {
 
     int id;
     Calendar date;

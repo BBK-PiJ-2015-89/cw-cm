@@ -1,11 +1,12 @@
 package Code;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * Created by graemewilkinson on 06/03/16.
  */
-public class ContactImpl implements Contact {
+public class ContactImpl implements Contact, Serializable {
     int id;
     String name;
     StringBuilder notes;

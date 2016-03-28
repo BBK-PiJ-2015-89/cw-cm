@@ -1,10 +1,13 @@
 package Code;
 
+import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
 
-public class ContactManagerImpl implements ContactManager {
+public class ContactManagerImpl implements ContactManager, Serializable {
+
+    private static final String FILE = "contacts.txt";
     private Set<Contact> contactList;
     private Set<Meeting> meetingList;
     private int contactID = 1;
@@ -212,7 +215,40 @@ public class ContactManagerImpl implements ContactManager {
 
     @Override
     public void flush() {
+        ObjectOutputStream fileOut = null;
+        try {
+            fileOut = new ObjectOutputStream((new BufferedOutputStream(new FileOutputStream(FILE))));
+            fileOut.write(contactID);
+            fileOut.write(meetingID);
+            fileOut.writeObject(contactList);
+            fileOut.writeObject(meetingList);
 
-
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException f) {
+            f.printStackTrace();
+        } finally {
+            try {
+                if (fileOut != null) {
+                    fileOut.close();
+                }
+            } catch(IOException g) {
+                g.printStackTrace();
+        }
     }
+}
+    public void readFromFile(){
+        ObjectInputStream fileIn = null;
+        int fromFileContactID = 0;
+        int fromfileMeetingID = 0;
+        Set<Meeting> fromFileMeetings = new HashSet<>();
+        Set<Contact> fromFileContacts = new HashSet<>();
+        try {
+            fileIn = new ObjectInputStream(new BufferedInputStream((new FileInputStream(FILE))));
+
+
+        }
+    }
+
+
 }
