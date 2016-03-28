@@ -130,9 +130,7 @@ public class ContactManagerImpl implements ContactManager, Serializable {
         }
         List<PastMeeting> returnList = new ArrayList<>();
         List<Meeting> filteredList = meetingList.stream().filter(a -> (a instanceof PastMeeting && contactInSet(id, a.getContacts()))).sorted(byTime).collect(Collectors.toList());
-        for (Meeting pm : filteredList) {
-            returnList.add((PastMeeting) pm);
-        }
+        returnList.addAll(filteredList.stream().map(pm -> (PastMeeting) pm).collect(Collectors.toList()));
         return returnList;
     }
 
@@ -297,16 +295,10 @@ public class ContactManagerImpl implements ContactManager, Serializable {
     }
 
     private boolean maxContact() {
-        if (contactID == MAX) {
-            return true;
-        }
-        return false;
+        return contactID == MAX;
     }
 
     private boolean maxMeeting() {
-        if (meetingID == MAX) {
-            return true;
-        }
-        return false;
+        return meetingID == MAX;
     }
 }
