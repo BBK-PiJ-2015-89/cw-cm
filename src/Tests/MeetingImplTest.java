@@ -16,10 +16,10 @@ public class MeetingImplTest {
 
     private Meeting meeting;
     private PastMeeting pastMeeting;
-    Set<Contact> contactList;
-    Calendar date;
-    Calendar pastDate;
-    String notes;
+    private Set<Contact> contactList;
+    private Calendar date;
+    private Calendar pastDate;
+    private String notes;
 
     @org.junit.Before
     public void testMeeting() {
@@ -47,7 +47,7 @@ public class MeetingImplTest {
 
     @Test (expected = NullPointerException.class)
     public void testGetContactsContainsNull(){
-        Set<Contact> emptyList = new HashSet<>();
+        Set<Contact> emptyList;
         emptyList = null;
         meeting = new FutureMeetingImpl(102, date, emptyList);
     }

@@ -89,7 +89,8 @@ public class ContactManagerImpl implements ContactManager, Serializable {
         return meetingList.stream().filter(a -> (a instanceof FutureMeeting && contactInSet(id, a.getContacts()))).sorted(byTime).collect(Collectors.toList());
     }
 
-    public boolean contactInSet(int id, Set<Contact> contactSet) {
+
+    private boolean contactInSet(int id, Set<Contact> contactSet) {
         return contactSet.stream().filter(a -> id == a.getId()).findFirst().isPresent();
     }
 
@@ -234,8 +235,6 @@ public class ContactManagerImpl implements ContactManager, Serializable {
             fileOut.writeObject(contactList);
             fileOut.writeObject(meetingList);
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException f) {
             f.printStackTrace();
         } finally {
@@ -266,8 +265,6 @@ public class ContactManagerImpl implements ContactManager, Serializable {
                 fromFileMeetings = (Set<Meeting>) fileIn.readObject();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
-            } catch (FileNotFoundException f) {
-                f.printStackTrace();
             } catch (IOException g) {
                 g.printStackTrace();
             }

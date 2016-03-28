@@ -6,9 +6,9 @@ import java.util.Set;
 
 public abstract class MeetingImpl implements Meeting, Serializable {
 
-    int id;
-    Calendar date;
-    Set<Contact> contacts;
+    private int id;
+    private Calendar date;
+    private Set<Contact> contacts;
 
     /**
      *Creates new meeting with a unique ID, a date and a set of contacts assigned to the meeting.
@@ -19,7 +19,7 @@ public abstract class MeetingImpl implements Meeting, Serializable {
      * @param contacts
      */
 
-    public MeetingImpl(int id, Calendar date, Set<Contact> contacts) {
+    MeetingImpl(int id, Calendar date, Set<Contact> contacts) {
         if(contacts.isEmpty()) {
             throw new IllegalArgumentException();
         }else{

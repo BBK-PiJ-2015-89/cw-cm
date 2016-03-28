@@ -7,9 +7,9 @@ import java.util.Objects;
  * Created by graemewilkinson on 06/03/16.
  */
 public class ContactImpl implements Contact, Serializable {
-    int id;
-    String name;
-    StringBuilder notes;
+    private int id;
+    private String name;
+    private StringBuilder notes;
 
     public ContactImpl(int id, String name, String notes) {
         if (id <= 0) {
@@ -58,7 +58,7 @@ public class ContactImpl implements Contact, Serializable {
 
     @Override
     public void addNotes(String note) {
-        notes.append(" " + note);
+        notes.append(" ").append(note);
     }
 
 
@@ -83,7 +83,7 @@ public class ContactImpl implements Contact, Serializable {
 
     /**
      * Overridden hashCode to ensure that codes are allocated based on the ID and Name of the contact.
-     * This ensures that any java library methods detect equality based on the parameteres, not the object
+     * This ensures that any java library methods detect equality based on the parameter's, not the object
      * address.
      *
      * @return and hashCode in the form of an int for the object created.

@@ -6,19 +6,14 @@ import org.junit.Assert;
 
 public class ContactImplTest {
 
-    Contact one;
-    Contact two;
-    Contact three;
+    private Contact one;
+    private Contact two;
+    private Contact three;
 
     @org.junit.Before
     public void setUp() throws Exception {
         one = new ContactImpl(1, "Graeme", "Member of staff");
         two = new ContactImpl(2, "Phil", "External Staff Member");
-    }
-
-    @org.junit.After
-    public void tearDown() throws Exception {
-
     }
 
     @org.junit.Test
@@ -58,7 +53,7 @@ public class ContactImplTest {
         three = new ContactImpl(4, "Phil", null);
     }
     @org.junit.Test (expected = IllegalArgumentException.class)
-    public void blankname() throws Exception {
+    public void blankName() throws Exception {
         three = new ContactImpl(4, "", "Notes go here");
     }
 }
