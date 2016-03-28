@@ -42,17 +42,20 @@ public class ContactImplTest {
 
     @org.junit.Test(expected = IllegalArgumentException.class)
     public void illegalID() throws Exception {
-        three = new ContactImpl(-1, "Phil", "External Staff Member");
+        new ContactImpl(-1, "Phil", "External Staff Member");
     }
-    @org.junit.Test (expected = NullPointerException.class)
+
+    @org.junit.Test(expected = NullPointerException.class)
     public void nullName() throws Exception {
         three = new ContactImpl(3, null, "External Staff Member");
     }
-    @org.junit.Test (expected = NullPointerException.class)
-    public void nullnotes() throws Exception {
+
+    @org.junit.Test(expected = NullPointerException.class)
+    public void nullNotes() throws Exception {
         three = new ContactImpl(4, "Phil", null);
     }
-    @org.junit.Test (expected = IllegalArgumentException.class)
+
+    @org.junit.Test(expected = IllegalArgumentException.class)
     public void blankName() throws Exception {
         three = new ContactImpl(4, "", "Notes go here");
     }

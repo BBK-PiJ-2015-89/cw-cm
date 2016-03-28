@@ -3,6 +3,7 @@ package Code;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Set;
+
 /**
  * Created by BBK-PiJ-2015-89
  */
@@ -14,14 +15,14 @@ public abstract class MeetingImpl implements Meeting, Serializable {
 
 
     MeetingImpl(int id, Calendar date, Set<Contact> contacts) {
-        if(contacts.isEmpty()) {
+        if (contacts.isEmpty()) {
             throw new IllegalArgumentException();
-        }else{
+        } else {
             this.contacts = contacts;
         }
-        if(date == null){
+        if (date == null) {
             throw new NullPointerException("No date");
-        }else {
+        } else {
             this.date = date;
         }
         if (id <= 0) {

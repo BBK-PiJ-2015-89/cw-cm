@@ -3,6 +3,7 @@ package Code;
 import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
+
 /**
  * Created by BBK-PiJ-2015-89
  */
@@ -26,7 +27,7 @@ public class ContactManagerImpl implements ContactManager, Serializable {
 
     @Override
     public int addFutureMeeting(Set<Contact> contacts, Calendar date) {
-        if(maxMeeting()){
+        if (maxMeeting()) {
             throw new IllegalStateException("No more meeting spaces");
         }
         if (contacts == null || date == null) {
@@ -134,12 +135,12 @@ public class ContactManagerImpl implements ContactManager, Serializable {
 
     @Override
     public void addNewPastMeeting(Set<Contact> contacts, Calendar date, String text) {
-        if(maxMeeting()){
+        if (maxMeeting()) {
             throw new IllegalStateException("No more meeting spaces");
         }
         int importContactSize = contacts.size();
         contacts.retainAll(contactList); //manipulate the imported list and leave only those contacts in the list that match both name and ID.
-        if (contacts.size() < importContactSize || !(Calendar.getInstance().compareTo(date) > 0) || contacts.size()==0) {
+        if (contacts.size() < importContactSize || !(Calendar.getInstance().compareTo(date) > 0) || contacts.size() == 0) {
             throw new IllegalArgumentException();
         }
 
@@ -174,7 +175,7 @@ public class ContactManagerImpl implements ContactManager, Serializable {
 
     @Override
     public int addNewContact(String name, String notes) {
-        if(maxContact()){
+        if (maxContact()) {
             throw new IllegalStateException("Max contents reached");
         }
         if (notes.isEmpty()) {
@@ -289,13 +290,16 @@ public class ContactManagerImpl implements ContactManager, Serializable {
 
     /**
      * Checks whether the max id for a contact has been reached
+     *
      * @return true or false based on the above.
      */
     private boolean maxContact() {
         return contactID == MAX;
     } //heap space will run out first no doubt.
+
     /**
      * Checks whether the max id for a meeting has been reached
+     *
      * @return true or false based on the above.
      */
     private boolean maxMeeting() {
