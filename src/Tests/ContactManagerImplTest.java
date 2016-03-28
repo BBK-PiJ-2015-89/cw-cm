@@ -1,5 +1,7 @@
-package Code;
+package Tests;
 
+
+import Code.*;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -153,7 +155,7 @@ public class ContactManagerImplTest {
     @Test
     public void testAddNewPastMeeting() throws Exception {
         contactManagerTest.addNewPastMeeting(contactManagerTest.getContacts(1), new GregorianCalendar(2014,5,2,12,30), "This is a test meeting in the past");
-        List<Meeting> tempList = contactManagerTest.getMeetingListOn(new GregorianCalendar(2014,5,2));
+        List<Meeting> tempList = contactManagerTest.getMeetingListOn(new GregorianCalendar(2014, 5, 2));
         Assert.assertEquals(1, tempList.size());
     }
 
@@ -264,5 +266,15 @@ public class ContactManagerImplTest {
         Set<Contact> filteredSet = contactManagerTest.getContacts(670);
     }
 
+    @Test
+    public void testMeetingsAfterFlush(){
+        List<Meeting> tempList = contactManagerTest.getMeetingListOn(new GregorianCalendar(2015,5,2));
+        int total = tempList.size();
+
+        contactManagerTest.flush();
+
+        tempList = contactManagerTest.getMeetingListOn(new GregorianCalendar(2015,5,2));
+        Assert.assertEquals(total, tempList.size());
+    }
 
 }

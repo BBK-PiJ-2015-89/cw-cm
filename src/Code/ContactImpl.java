@@ -1,5 +1,7 @@
 package Code;
 
+import java.util.Objects;
+
 /**
  * Created by graemewilkinson on 06/03/16.
  */
@@ -75,12 +77,7 @@ public class ContactImpl implements Contact {
             return false;
         }
         Contact c = (Contact) o;
-
-        if (c.getId() == id && c.getName() == name) {
-            return true;
-        } else {
-            return false;
-        }
+        return c.getId() == id && Objects.equals(c.getName(), name);
     }
 
     /**
@@ -93,7 +90,7 @@ public class ContactImpl implements Contact {
     public int hashCode() {
         int hash = 7;
         hash = 31 * hash + id;
-        hash = 31 * hash + (null == name ? 0 : name.hashCode());
+        hash = 31 * hash + name.hashCode();
         return hash;
     }
 }

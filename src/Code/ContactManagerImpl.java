@@ -17,12 +17,12 @@ public class ContactManagerImpl implements ContactManager {
 
     @Override
     public int addFutureMeeting(Set<Contact> contacts, Calendar date) {
-        if (contacts == null || date == null){
+        if (contacts == null || date == null) {
             throw new NullPointerException();
         }
         int importContactSize = contacts.size();
         contacts.retainAll(contactList);
-        if (contacts.size() < importContactSize || !(Calendar.getInstance().compareTo(date) < 0)){
+        if (contacts.size() < importContactSize || !(Calendar.getInstance().compareTo(date) < 0)) {
             throw new IllegalArgumentException();
         }
 
@@ -36,10 +36,10 @@ public class ContactManagerImpl implements ContactManager {
         Optional<Meeting> foundMeeting = meetingList.stream().filter(c -> c.getId() == id).findFirst();
         if (!(foundMeeting.isPresent())) {
             return null;
-        } else if (foundMeeting.get().getDate().compareTo(new GregorianCalendar()) > 0){
+        } else if (foundMeeting.get().getDate().compareTo(new GregorianCalendar()) > 0) {
             throw new IllegalArgumentException();
         }
-        return (PastMeeting)foundMeeting.get();
+        return (PastMeeting) foundMeeting.get();
     }
 
     @Override
@@ -47,10 +47,10 @@ public class ContactManagerImpl implements ContactManager {
         Optional<Meeting> foundMeeting = meetingList.stream().filter(c -> c.getId() == id).findFirst();
         if (!(foundMeeting.isPresent())) {
             return null;
-        } else if (foundMeeting.get().getDate().compareTo(new GregorianCalendar()) < 0){
+        } else if (foundMeeting.get().getDate().compareTo(new GregorianCalendar()) < 0) {
             throw new IllegalArgumentException();
         }
-        return (FutureMeeting)foundMeeting.get();
+        return (FutureMeeting) foundMeeting.get();
     }
 
     @Override
@@ -120,8 +120,8 @@ public class ContactManagerImpl implements ContactManager {
         }
         List<PastMeeting> returnList = new ArrayList<>();
         List<Meeting> filteredList = meetingList.stream().filter(a -> (a instanceof PastMeeting && contactInSet(id, a.getContacts()))).sorted(byTime).collect(Collectors.toList());
-        for (Meeting pm : filteredList){
-            returnList.add((PastMeeting)pm);
+        for (Meeting pm : filteredList) {
+            returnList.add((PastMeeting) pm);
         }
         return returnList;
     }
@@ -130,9 +130,9 @@ public class ContactManagerImpl implements ContactManager {
     public void addNewPastMeeting(Set<Contact> contacts, Calendar date, String text) {
         int importContactSize = contacts.size();
         contacts.retainAll(contactList);
-        if (contacts.size() < importContactSize || !(Calendar.getInstance().compareTo(date) > 0)){
+        if (contacts.size() < importContactSize || !(Calendar.getInstance().compareTo(date) > 0)) {
             throw new IllegalArgumentException();
-    }
+        }
 
         meetingList.add(new PastMeetingImpl(meetingID, date, contacts, text));
         meetingID++;
@@ -140,18 +140,18 @@ public class ContactManagerImpl implements ContactManager {
 
     @Override
     public PastMeeting addMeetingNotes(int id, String text) {
-        if (text == null){
+        if (text == null) {
             throw new NullPointerException();
         }
         Meeting current = getMeeting(id);
-        if (current == null){
+        if (current == null) {
             throw new IllegalArgumentException();
         }
-        if (current.getDate().compareTo(new GregorianCalendar()) >0) {
+        if (current.getDate().compareTo(new GregorianCalendar()) > 0) {
             throw new IllegalStateException();
         }
         String notes = "";
-        if (current instanceof PastMeeting){
+        if (current instanceof PastMeeting) {
             notes = ((PastMeeting) current).getNotes();
             notes += " ";
         }
@@ -212,6 +212,7 @@ public class ContactManagerImpl implements ContactManager {
 
     @Override
     public void flush() {
+
 
     }
 }
