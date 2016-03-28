@@ -16,6 +16,7 @@ public class ContactManagerImpl implements ContactManager, Serializable {
     public ContactManagerImpl() {
         contactList = new HashSet<>();
         meetingList = new HashSet<>();
+        readFromFile();
     }
 
     @Override
@@ -218,8 +219,8 @@ public class ContactManagerImpl implements ContactManager, Serializable {
         ObjectOutputStream fileOut = null;
         try {
             fileOut = new ObjectOutputStream((new BufferedOutputStream(new FileOutputStream(FILE))));
-            fileOut.write(contactID);
-            fileOut.write(meetingID);
+            fileOut.writeInt(contactID);
+            fileOut.writeInt(meetingID);
             fileOut.writeObject(contactList);
             fileOut.writeObject(meetingList);
 
@@ -240,13 +241,42 @@ public class ContactManagerImpl implements ContactManager, Serializable {
     public void readFromFile(){
         ObjectInputStream fileIn = null;
         int fromFileContactID = 0;
-        int fromfileMeetingID = 0;
+        int fromFileMeetingID = 0;
         Set<Meeting> fromFileMeetings = new HashSet<>();
         Set<Contact> fromFileContacts = new HashSet<>();
         try {
             fileIn = new ObjectInputStream(new BufferedInputStream((new FileInputStream(FILE))));
 
+            fromFileContactID = fileIn.readInt();
+            fromFileMeetingID = fileIn.readInt();
+            fromFileContacts = (Set<Contact>)fileIn.readObject();
+            fromFileMeetings = (Set<Meeting>)fileIn.readObject();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException f) {
+            f.printStackTrace();
+        } catch (IOException g) {
+            g.printStackTrace();
+        }
+        try{
+            if(fileIn != null){
+                fileIn.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+        if(fromFileContactID != 0){
+            contactID = fromFileContactID;
+        }
+        if(fromFileMeetingID != 0){
+            meetingID = fromFileMeetingID;
+        }
+        if(fromFileContacts != null){
+            contactList = fromFileContacts;
+        }
+        if(fromFileMeetings != null){
+            meetingList = fromFileMeetings;
         }
     }
 
