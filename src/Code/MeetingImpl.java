@@ -10,14 +10,6 @@ public abstract class MeetingImpl implements Meeting, Serializable {
     private Calendar date;
     private Set<Contact> contacts;
 
-    /**
-     *Creates new meeting with a unique ID, a date and a set of contacts assigned to the meeting.
-     * You cannot pass an empty set of contacts, a null date, or 0 or negative int.
-     *
-     * @param id
-     * @param date
-     * @param contacts
-     */
 
     MeetingImpl(int id, Calendar date, Set<Contact> contacts) {
         if(contacts.isEmpty()) {
@@ -52,8 +44,13 @@ public abstract class MeetingImpl implements Meeting, Serializable {
         return contacts;
     }
 
+    /**
+     * Create to enable printing of sets of contacts in tests for debugging.
+     *
+     * @return String containing id, and date of meeting.
+     */
     @Override
     public String toString() {
-        return id + ", " + date + ", ";
+        return id + ", " + date;
     }
 }

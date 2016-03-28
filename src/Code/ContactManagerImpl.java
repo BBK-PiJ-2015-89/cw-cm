@@ -82,7 +82,8 @@ public class ContactManagerImpl implements ContactManager, Serializable {
                 .getDate().getTime().compareTo(e2.getDate().getTime());
 
         int id = contact.getId();
-        Optional<Contact> contactInList = contactList.stream().filter(a -> a.getId() == id).findFirst();
+        String name = contact.getName();
+        Optional<Contact> contactInList = contactList.stream().filter(a -> a.getId() == id && Objects.equals(a.getName(), name)).findFirst();
         if (!(contactInList.isPresent())) {
             throw new IllegalArgumentException("Contact not in list");
         }
@@ -90,6 +91,12 @@ public class ContactManagerImpl implements ContactManager, Serializable {
     }
 
 
+    /**
+     * Checks whether the passed in contact
+     * @param id
+     * @param contactSet
+     * @return
+     */
     private boolean contactInSet(int id, Set<Contact> contactSet) {
         return contactSet.stream().filter(a -> id == a.getId()).findFirst().isPresent();
     }
@@ -248,6 +255,9 @@ public class ContactManagerImpl implements ContactManager, Serializable {
         }
     }
 
+    /**
+     * Reads the ID counters, and contact and meeting sets from file back to the Contact Manager.
+     */
     private void readFromFile() {
         File cFile = new File("contacts.txt");
         if (cFile.exists()) {
@@ -291,10 +301,17 @@ public class ContactManagerImpl implements ContactManager, Serializable {
         }
     }
 
+    /**
+     * Checks whether the max id for a contact has been reached
+     * @return true or false based on the above.
+     */
     private boolean maxContact() {
         return contactID == MAX;
     }
-
+    /**
+     * Checks whether the max id for a meeting has been reached
+     * @return true or false based on the above.
+     */
     private boolean maxMeeting() {
         return meetingID == MAX;
     }

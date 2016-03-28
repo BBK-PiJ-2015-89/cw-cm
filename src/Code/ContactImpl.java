@@ -95,6 +95,11 @@ public class ContactImpl implements Contact, Serializable {
         return hash;
     }
 
+    /**
+     * Create to enable printing of sets of contacts in tests for debugging.
+     *
+     * @return String of contacts id, name and notes.
+     */
     @Override
     public String toString() {
         return id + ", " + name + ", " + "notes: " + notes;
