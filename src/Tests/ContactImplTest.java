@@ -3,7 +3,9 @@ package Tests;
 import Code.Contact;
 import Code.ContactImpl;
 import org.junit.Assert;
-
+/**
+ * @author BBK-PiJ-2015-89
+ */
 public class ContactImplTest {
 
     private Contact one;

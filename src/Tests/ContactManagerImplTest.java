@@ -8,7 +8,9 @@ import org.junit.Test;
 
 import java.io.File;
 import java.util.*;
-
+/**
+ * @author BBK-PiJ-2015-89
+ */
 public class ContactManagerImplTest {
 
     private ContactManager contactManagerTest;

@@ -5,7 +5,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * Created by BBK-PiJ-2015-89
+ * @author BBK-PiJ-2015-89
  */
 
 public class ContactManagerImpl implements ContactManager, Serializable {

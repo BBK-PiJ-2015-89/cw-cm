@@ -11,7 +11,9 @@ import java.util.Set;
 
 import static org.junit.Assert.assertTrue;
 
-
+/**
+ * @author BBK-PiJ-2015-89
+ */
 public class MeetingImplTest {
 
     private Meeting meeting;

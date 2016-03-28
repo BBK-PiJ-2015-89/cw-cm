@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * Created by BBK-PiJ-2015-89
+ * @author BBK-PiJ-2015-89
  */
 public class ContactImpl implements Contact, Serializable {
     private int id;

@@ -2,9 +2,8 @@ package Code;
 
 import java.util.Calendar;
 import java.util.Set;
-
 /**
- * Created by BBK-PiJ-2015-89
+ * @author BBK-PiJ-2015-89
  */
 public class PastMeetingImpl extends MeetingImpl implements PastMeeting {
 
