@@ -65,11 +65,11 @@ public class ContactManagerImpl implements ContactManager, Serializable {
 
     @Override
     public Meeting getMeeting(int id) {
-        Optional<Meeting> foundMeeting = meetingList.stream().filter(c -> c.getId() == id).findFirst();
+        Optional<Meeting> foundMeeting = meetingList.stream().filter(c -> c.getId() == id).findFirst(); //filter for meeting
         if (foundMeeting.isPresent()) {
-            return foundMeeting.get();
+            return foundMeeting.get(); //if we found the meeting return it.
         }
-        return null;
+        return null; // otherwise return null.
     }
 
     @Override
@@ -102,7 +102,7 @@ public class ContactManagerImpl implements ContactManager, Serializable {
             Calendar nextDay = (Calendar) date.clone();
             nextDay.add(Calendar.DAY_OF_MONTH, 1);
             for (int i = 0; i < meetingList.size(); i++) {
-                if (c.getDate().compareTo(date) >= 0 && c.getDate().compareTo(nextDay) < 0) {
+                if (c.getDate().compareTo(date) >= 0 && c.getDate().compareTo(nextDay) < 0) { //filter meetings from the day specified and ensuring they are before the next day.
                     onThisDay = true;
                 }
             }
@@ -137,7 +137,7 @@ public class ContactManagerImpl implements ContactManager, Serializable {
         }
         int importContactSize = contacts.size();
         contacts.retainAll(contactList); //manipulate the imported list and leave only those contacts in the list that match both name and ID.
-        if (contacts.size() < importContactSize || !(Calendar.getInstance().compareTo(date) > 0)) {
+        if (contacts.size() < importContactSize || !(Calendar.getInstance().compareTo(date) > 0) || contacts.size()==0) {
             throw new IllegalArgumentException();
         }
 
@@ -151,7 +151,7 @@ public class ContactManagerImpl implements ContactManager, Serializable {
             throw new NullPointerException();
         }
         Meeting current = getMeeting(id);
-        if (current == null) {
+        if (current == null) { //if meeting does not exsist throw exception.
             throw new IllegalArgumentException();
         }
         if (current.getDate().compareTo(new GregorianCalendar()) > 0) {
@@ -180,7 +180,7 @@ public class ContactManagerImpl implements ContactManager, Serializable {
         } else {
             int TempID = contactID;
             contactID++;
-            contactList.add(new ContactImpl(TempID, name, notes));
+            contactList.add(new ContactImpl(TempID, name, notes)); //if name is null here a NPE will be thrown by Contact constructor.
             return TempID;
         }
     }
@@ -231,7 +231,7 @@ public class ContactManagerImpl implements ContactManager, Serializable {
         } finally {
             try {
                 if (fileOut != null) {
-                    fileOut.close();
+                    fileOut.close();//ensure we close the stream.
                 }
             } catch (IOException g) {
                 g.printStackTrace();
@@ -291,7 +291,7 @@ public class ContactManagerImpl implements ContactManager, Serializable {
      */
     private boolean maxContact() {
         return contactID == MAX;
-    }
+    } //heap space will run out first no doubt.
     /**
      * Checks whether the max id for a meeting has been reached
      * @return true or false based on the above.

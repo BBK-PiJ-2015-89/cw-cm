@@ -90,7 +90,7 @@ public class ContactImpl implements Contact, Serializable {
      */
     public int hashCode() {
         int hash = 7;
-        hash = 31 * hash + id;
+        hash = 31 * hash + id; //using id and name to create hash ensures that equal parameters in the contact Object get the same hashCode.
         hash = 31 * hash + name.hashCode();
         return hash;
     }
