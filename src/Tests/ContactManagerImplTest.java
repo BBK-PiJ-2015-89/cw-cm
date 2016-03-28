@@ -169,6 +169,12 @@ public class ContactManagerImplTest {
         contactManagerTest.addNewPastMeeting(tempInvalidContactList, new GregorianCalendar(2014, 5, 2, 12, 30), "This is a test meeting in the past");
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testAddNewPastMeetingEmptyContactSet() throws Exception {
+        Set<Contact> emptySet = new HashSet<>();
+        contactManagerTest.addNewPastMeeting(emptySet, new GregorianCalendar(2014, 5, 2, 12, 30), "This is a test meeting in the past");
+    }
+
     @Test
     public void testAddMeetingNotes() throws Exception {
         PastMeeting returnedPastMeeting = contactManagerTest.addMeetingNotes(4, "Graeme said he would do action point 7 for tests");

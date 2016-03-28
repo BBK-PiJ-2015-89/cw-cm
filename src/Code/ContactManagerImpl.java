@@ -31,7 +31,7 @@ public class ContactManagerImpl implements ContactManager, Serializable {
             throw new NullPointerException();
         }
         int importContactSize = contacts.size();
-        contacts.retainAll(contactList);
+        contacts.retainAll(contactList); //manipulate the imported list and leave only those contacts in the list that match both name and ID.
         if (contacts.size() < importContactSize || !(Calendar.getInstance().compareTo(date) < 0)) {
             throw new IllegalArgumentException();
         }
@@ -43,10 +43,10 @@ public class ContactManagerImpl implements ContactManager, Serializable {
 
     @Override
     public PastMeeting getPastMeeting(int id) {
-        Optional<Meeting> foundMeeting = meetingList.stream().filter(c -> c.getId() == id).findFirst();
+        Optional<Meeting> foundMeeting = meetingList.stream().filter(c -> c.getId() == id).findFirst(); //check if the meeting is in the set.
         if (!(foundMeeting.isPresent())) {
-            return null;
-        } else if (foundMeeting.get().getDate().compareTo(new GregorianCalendar()) > 0) {
+            return null; //if meeting is not in set return null
+        } else if (foundMeeting.get().getDate().compareTo(new GregorianCalendar()) > 0) { // check if meeting is after today, if so, not likely to have taken place so throw exception.
             throw new IllegalArgumentException();
         }
         return (PastMeeting) foundMeeting.get();
@@ -57,7 +57,7 @@ public class ContactManagerImpl implements ContactManager, Serializable {
         Optional<Meeting> foundMeeting = meetingList.stream().filter(c -> c.getId() == id).findFirst();
         if (!(foundMeeting.isPresent())) {
             return null;
-        } else if (foundMeeting.get().getDate().compareTo(new GregorianCalendar()) < 0) {
+        } else if (foundMeeting.get().getDate().compareTo(new GregorianCalendar()) < 0) { // if meeting happened before today, then throw exception as it is in the past.
             throw new IllegalArgumentException();
         }
         return (FutureMeeting) foundMeeting.get();
@@ -120,7 +120,7 @@ public class ContactManagerImpl implements ContactManager, Serializable {
                 .getDate().getTime().compareTo(e2.getDate().getTime());
 
         int id = contact.getId();
-        Optional<Contact> contactInList = contactList.stream().filter(a -> a.getId() == id).findFirst();
+        Optional<Contact> contactInList = contactList.stream().filter(a -> a.getId() == id).findFirst(); // check if the contact is in the contactList
         if (!(contactInList.isPresent())) {
             throw new IllegalArgumentException("Contact not in list");
         }
@@ -136,7 +136,7 @@ public class ContactManagerImpl implements ContactManager, Serializable {
             throw new IllegalStateException("No more meeting spaces");
         }
         int importContactSize = contacts.size();
-        contacts.retainAll(contactList);
+        contacts.retainAll(contactList); //manipulate the imported list and leave only those contacts in the list that match both name and ID.
         if (contacts.size() < importContactSize || !(Calendar.getInstance().compareTo(date) > 0)) {
             throw new IllegalArgumentException();
         }
